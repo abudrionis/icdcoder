@@ -25,8 +25,6 @@ def finetune_evaluate(train_and_test_data,
             threshold,
             warm_up):
     
-
-    print(pre_trained_model)
     
     # Reading data
     X, Y = read_csv_onehot(filepath = train_and_test_data)
