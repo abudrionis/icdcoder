@@ -8,17 +8,17 @@
 The purpose of this project is to facilitate:
 
 
-**(1)** fine-tuning pre-trained BERT models using discharge summaries and diagnosis (ICD) codes, and
+**(1)** training (fine-tuning) pre-trained BERT models and traditional supervised machine learning models using discharge summaries and diagnosis (ICD) codes, and
 
-**(2)** evaluating how this fine-tuned model performs in pairing unseen discharge summaries with the correct ICD codes
+**(2)** evaluating how these trained models performs in pairing unseen discharge summaries with the correct ICD codes
 
-## How to get hold of/prepare dataset used for fine-tuning 
+## How to get hold of/prepare dataset used for training 
 
-To obtain a valid dataset to use for fine-tuning the pre-trained model, use one of the two options below.
+To obtain a valid dataset to use for training the models use one of the two options below.
 
 **(1)** Contact Hercules Dalianis at hercules@dsv.su.se to get hold of the Swedish EPR Gastro ICD-10 Pseudo Corpus containing approximately 6000 Swedish discharge summaries from 5000 patients.  
 
-**(2)** If you want to fine-tune the pre-trained model using your own data, the data needs to be in a csv file adhering to the following format:
+**(2)** If you want to train the models using your own data, the data needs to be in a csv file adhering to the following format:
 
 ***Column 1***: *Patient ID (optional)*
 
@@ -63,7 +63,7 @@ Then, you clone the project by entering
 `git clone https://github.com/sonjaremmer/icdcoder.git`
 
 
-**(2)** Download the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
+**(2)** If you want to use BERT to do the ICD classification, download the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
 
 If you want another pre-trained model, you need to put the associated *config.json* and *vocab.txt* file in the *icdcoder/models/pre_trained_model* folder as well. This is not needed if you are working with *bert-base-swedish-cased* since those config and vocal files are already in the project folder. 
 
@@ -92,16 +92,20 @@ mess up other projects by installing the versions of the packages used in this p
 `pip install -r requirements.txt`
 
 
-**(6)** Now, you are ready to either **(i)** fine-tune the pre-trained model, **(ii)**, fine-tune the pre-trained model and evaluate the newly fine-tuned model, or **(iii)** use and already fine-tuned model to predict the ICD codes of an unseen discharge summary. This is done by entering 
+**(6)** You are ready to train and/or evaluate your models. Follow the instructions in the sections below to do so
+
+
+## Fine-tune/evaluate BERT model
+
+Now, you can **(i)** fine-tune the pre-trained BERT model, **(ii)**, fine-tune the BERT pre-trained model and evaluate the newly fine-tuned model, or **(iii)** use and already fine-tuned model to predict the ICD codes of an unseen discharge summary. This is done by entering 
 
 `python3 BERT_coder.py` followed by one of the main arguments specified in the section "Fine-tuning and testing using the main arguments" below.
 
-
-## Fine-tuning and testing using the main arguments
+### Fine-tuning and testing using the main arguments
 *Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
 
 
-### Fine-tuning only
+#### Fine-tuning only
 
 **(i)** `-train` 
                         Filepath to csv file used for training. The file
@@ -117,7 +121,7 @@ For example
 `python3 BERT_coder.py -train /Volumes/SecretUSB/train_data.csv`
 
 
-### Fine-tuning and evaluating
+#### Fine-tuning and evaluating
 
 **(ii)** `-train_and_test`
 			Filepath to csv file used for training and
@@ -133,7 +137,7 @@ For example
 
 `python3 BERT_coder.py -train /Volumes/SecretUSB/train_and_test_data.csv`
 
-### Testing only
+#### Testing only
 
 **(iii)** `-test`    	Use argument if you want to predict the ICD
                 	codes of an unseen discharge summary
@@ -146,13 +150,13 @@ Predict the ICD codes of a single discharge summary already trained (fine-tuned)
 Nothing more than the argument itself is specified. After entering the line above, you will be asked to enter the discharge summary you want to predict the ICD codes for.
 
 
-## Customize run using the optional arguments
+### Customize run using the optional arguments
 
 *To get a description of all arguments in the terminal/command prompt, use the help argument by entering the following*
 
 `python3 BERT_coder.py -h`
 
-### For -train, -train_and_test, or -test
+#### For -train, -train_and_test, or -test
 
   `-pre_trained` 
                         Filepath to pre-trained model. Default is
@@ -175,7 +179,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 
 
-### For -train or -train_and_test
+#### For -train or -train_and_test
 
 
   `-new_fine_tuned` 
@@ -200,7 +204,7 @@ Nothing more than the argument itself is specified. After entering the line abov
                         **Default is 155**.
 
 
-### For -train_and_test
+#### For -train_and_test
 
 
 
@@ -218,3 +222,6 @@ Nothing more than the argument itself is specified. After entering the line abov
   `-random_state`
                         A seed (integer) to use as the random state in the
                         k-fold cross-validation. **Default is 123**.
+
+
+## Train/evaluate traditional supervised machine learning models
