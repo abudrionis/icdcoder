@@ -225,3 +225,5 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 
 ## Train/evaluate traditional supervised machine learning models
+
+You are also ready to train and evaluate traditional supervised machine learning models...
