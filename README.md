@@ -94,11 +94,11 @@ mess up other projects by installing the versions of the packages used in this p
 
 **(6)** Now, you are ready to either **(i)** fine-tune the pre-trained model, **(ii)**, fine-tune the pre-trained model and evaluate the newly fine-tuned model, or **(iii)** use and already fine-tuned model to predict the ICD codes of an unseen discharge summary. This is done by entering 
 
-`python3 icdcoder.py` followed by one of the main arguments specified in the section "Fine-tuning and testing using the main arguments" below.
+`python3 BERT_coder.py` followed by one of the main arguments specified in the section "Fine-tuning and testing using the main arguments" below.
 
 
 ## Fine-tuning and testing using the main arguments
-*Note that the arguments are mutually exclusive and one is required to run the icdcoder.py script*
+*Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
 
 
 ### Fine-tuning only
@@ -110,11 +110,11 @@ mess up other projects by installing the versions of the packages used in this p
 Train (fine-tune) using all of your dataset by using the entering
 
 
-`python3 icdcoder.py -train [filepath to data]`
+`python3 BERT_coder.py -train [filepath to data]`
 
 For example
 
-`python3 icdcoder.py -train /Volumes/SecretUSB/train_data.csv`
+`python3 BERT_coder.py -train /Volumes/SecretUSB/train_data.csv`
 
 
 ### Fine-tuning and evaluating
@@ -127,11 +127,11 @@ For example
 Train and evaluate by entering
 
 
-`python3 icdcoder.py -train_and_test [filepath to data]`
+`python3 BERT_coder.py -train_and_test [filepath to data]`
 
 For example
 
-`python3 icdcoder.py -train /Volumes/SecretUSB/train_and_test_data.csv`
+`python3 BERT_coder.py -train /Volumes/SecretUSB/train_and_test_data.csv`
 
 ### Testing only
 
@@ -141,7 +141,7 @@ For example
 Predict the ICD codes of a single discharge summary already trained (fine-tuned) model by entering
 
 
-`python3 icdcoder.py -test`
+`python3 BERT_coder.py -test`
 
 Nothing more than the argument itself is specified. After entering the line above, you will be asked to enter the discharge summary you want to predict the ICD codes for.
 
@@ -150,7 +150,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 *To get a description of all arguments in the terminal/command prompt, use the help argument by entering the following*
 
-`python3 icdcoder.py -h`
+`python3 BERT_coder.py -h`
 
 ### For -train, -train_and_test, or -test
 
