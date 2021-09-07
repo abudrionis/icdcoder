@@ -28,6 +28,7 @@ def main(train_and_test_data,
         warm_up,
         threshold):
     
+    # If argument train_and_test_data is given, the finetune_evaluate function is run
     if train_and_test_data:
         finetune_evaluate(train_and_test_data, 
             pre_trained_model,
@@ -42,6 +43,7 @@ def main(train_and_test_data,
             warm_up,
             threshold)
 
+    # If argument train_data is given, the finetune function is run
     elif train_data:
         finetune(train_data, 
             pre_trained_model,
@@ -53,6 +55,7 @@ def main(train_and_test_data,
             warm_up,
             threshold)
     
+    # If argument test is given, the evaluate function is run
     elif test:
         evaluate(pre_trained_model, 
             fine_tuned_model,
@@ -62,6 +65,7 @@ def main(train_and_test_data,
 
 if __name__ == '__main__':
 
+    # Defining default values
     base_dir = os.path.dirname(os.path.abspath(__file__))
     default_pre_trained_model = base_dir+'/models/pre_trained_model'
     default_fine_tuned_model = base_dir+'/models/fine_tuned_model/pytorch_model.bin'
@@ -81,7 +85,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     mutually_exclusive = parser.add_mutually_exclusive_group(required=True)
 
-
+    # Arguments -train, -train_and_test and -test are mutually exclusive and at least one is required
     mutually_exclusive.add_argument('-train', dest='only_train_data', type=str, default=None,
                         help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to prepare dataset used for fine-tuning.')
     mutually_exclusive.add_argument('-train_and_test', dest='train_and_test_data', type=str, default=None,
@@ -89,7 +93,7 @@ if __name__ == '__main__':
     mutually_exclusive.add_argument('-test', dest='only_test_data', action='store_true', default=None,
                         help='Use argument if you want to predict the ICD codes of an unseen discharge summary')
     
-
+    # The rest of the arguments are optional and while not all functions are compatible with all main arguments, passing a non-compatible argument will just be ignored 
     parser.add_argument('-pre_trained', dest='pre_trained_model', type=str, default=default_pre_trained_model,
                         help='Filepath to pre-trained model. Default is subfolder ./models/pre_trained_model', required=False)
     parser.add_argument('-fine_tuned', dest='fine_tuned_model', type=str, default=default_fine_tuned_model,
@@ -118,7 +122,6 @@ if __name__ == '__main__':
                         help='The number of warm-up steps, that is, the number of steps before the learning rate starts to decay. Default is 155.', required=False)
     parser.add_argument('-threshold', dest='threshold', default=default_threshold,
                         help='The threshold that binarizes the model output (0: label not present, 1: label present). Should be a number between 0 and 1, default is 0.5.', required=False)
-
 
     args = parser.parse_args()
 
