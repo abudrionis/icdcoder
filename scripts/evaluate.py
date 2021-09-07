@@ -40,14 +40,16 @@ def evaluate(pre_trained_model, fine_tuned_model, batch_size, threshold):
     # Creating an empty list to put the ICD code(s) associated with the discharge summary
     prediction_list = []
 
-    # For each prediction and 
+    # For each prediction and each label, if a prediction is 1, the corresponding label is appended to the list of predictions
     for prediction, label in zip(predictions[0], labels):
         if prediction == 1:
             prediction_list.append(label)
 
+    # If all predictions are 0, it is printed that no ICD codes were predicted (meaning all predictions were below the threshold)
     if all(prediction == 0 for prediction in predictions[0]):
         print('Sorry, no groups were able to be identified')
 
+    # Otherwise, the list of predictions is printed
     else:
         print('The discharge summary belongs to the group(s)', ', '.join(str(group) for group in prediction_list))
 
