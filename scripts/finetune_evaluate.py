@@ -28,20 +28,25 @@ def finetune_evaluate(train_and_test_data,
 
     print(pre_trained_model)
     
-    
+    # Reading data
     X, Y = read_csv_onehot(filepath = train_and_test_data)
 
+    # Splitting the data into training data and held out-test set which is not used during the training
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y,
                                                       test_size = test_size,
                                                       shuffle = True)
 
+    # Defining the model
     bert_model = Model(path = pre_trained_model, num_labels = len(Y[0]))
+    # Defining the tokenizer
     bert_tokenizer = AutoTokenizer.from_pretrained(
         pre_trained_model, model_max_length = 512,
         max_len = 512,
         truncation = True, padding='Longest')
+    # Initializing the trainer
     trainer = Trainer(model = bert_model, tokenizer = bert_tokenizer)
 
+    # If n_kfold is 1, the training data is not divided into folds am
     if n_kfold == 1:
 
         trainer.train(
