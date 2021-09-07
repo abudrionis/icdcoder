@@ -46,7 +46,7 @@ def finetune_evaluate(train_and_test_data,
     # Initializing the trainer
     trainer = Trainer(model = bert_model, tokenizer = bert_tokenizer)
 
-    # If n_kfold is 1, the training data is not divided into folds am
+    # If n_kfold is 1, the training data is not divided into folds and all training data is used for training
     if n_kfold == 1:
 
         trainer.train(
