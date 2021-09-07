@@ -46,8 +46,8 @@ def finetune_evaluate(train_and_test_data,
     # Initializing the trainer
     trainer = Trainer(model = bert_model, tokenizer = bert_tokenizer)
 
-    # If n_kfold is 1, the training data is not divided into folds and all training data is used for training
-    if n_kfold == 1:
+    # If n_kfold is 1 (which is default) or less, the training data is not divided into folds and all training data is used for training
+    if n_kfold <= 1:
 
         trainer.train(
             X = X_train,
@@ -59,7 +59,9 @@ def finetune_evaluate(train_and_test_data,
             thres = threshold,
             warm_up = warm_up,
             save_path = new_fine_tuned_model)
-    else: 
+
+    # If n_kfold is more than 1, the training data is divided into n_kfold number of parts which are trained seperatley 
+    else:
 
         kfold = KFoldCrossVal(nfolds = n_kfold, trainer = trainer, RANDOM_STATE = random_state)
         kfold.train(
@@ -72,5 +74,4 @@ def finetune_evaluate(train_and_test_data,
             thres = threshold,
             warm_up = warm_up,
             save_path = new_fine_tuned_model)
-
 
