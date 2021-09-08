@@ -1,5 +1,5 @@
 '''
-Main script for using BERT
+Main script for using the baseline models
 
 Author: Sonja Remmer
 
