@@ -7,6 +7,7 @@ Author: Sonja Remmer
 
 import argparse
 import os
+
 from scripts.train import train_bert
 from scripts.test import test_bert
 from scripts.train_test import train_test_bert
@@ -31,32 +32,32 @@ def main(train_and_test_data,
     
     # If argument train_and_test_data is given, the finetune_evaluate function is run
     if train_and_test_data:
-        train_test_bert(train_and_test_data, 
-            pre_trained_model,
-            new_fine_tuned_model,
-            test_size, 
-            n_kfold,
-            random_state,
-            n_epochs,
-            batch_size_train,
-            batch_size_test,
-            gradient_accumulation,
-            learning_rate,
-            warm_up,
-            threshold)
+        train_test_bert(train_and_test_data=train_and_test_data, 
+            pre_trained_model=pre_trained_model,
+            new_fine_tuned_model=new_fine_tuned_model,
+            test_size=test_size, 
+            n_kfold=n_kfold,
+            random_state=random_state,
+            n_epochs=n_epochs,
+            batch_size_train=batch_size_train,
+            batch_size_test=batch_size_test,
+            gradient_accumulation=gradient_accumulation,
+            learning_rate=learning_rate,
+            warm_up=warm_up,
+            threshold=threshold)
 
     # If argument train_data is given, the finetune function is run
     elif train_data:
-        train_bert(train_data, 
-            pre_trained_model,
-            new_fine_tuned_model,
-            n_epochs,
-            batch_size_train,
-            random_state,
-            gradient_accumulation,
-            learning_rate,
-            warm_up,
-            threshold)
+        train_bert(train_data=train_data, 
+            pre_trained_model=pre_trained_model,
+            new_fine_tuned_model=new_fine_tuned_model,
+            n_epochs=n_epochs,
+            batch_size_train=batch_size_train,
+            random_state=random_state,
+            gradient_accumulation=gradient_accumulation,
+            learning_rate=learning_rate,
+            warm_up=warm_up,
+            threshold=threshold)
     
     # If argument test is given, the evaluate function is run
     elif test:
