@@ -7,9 +7,9 @@ Author: Sonja Remmer
 
 import argparse
 import os
-from scripts.finetune import finetune
-from scripts.evaluate import evaluate
-from scripts.finetune_evaluate import finetune_evaluate
+from scripts.train import train_bert
+from scripts.test import test_bert
+from scripts.train_test import train_test_bert
 
 
 def main(train_and_test_data,
@@ -22,7 +22,8 @@ def main(train_and_test_data,
         n_kfold, 
         random_state,
         n_epochs,
-        batch_size,
+        batch_size_train,
+        batch_size_test,
         gradient_accumulation,
         learning_rate,
         warm_up,
@@ -30,14 +31,15 @@ def main(train_and_test_data,
     
     # If argument train_and_test_data is given, the finetune_evaluate function is run
     if train_and_test_data:
-        finetune_evaluate(train_and_test_data, 
+        train_test_bert(train_and_test_data, 
             pre_trained_model,
             new_fine_tuned_model,
             test_size, 
             n_kfold,
             random_state,
             n_epochs,
-            batch_size,
+            batch_size_train,
+            batch_size_test,
             gradient_accumulation,
             learning_rate,
             warm_up,
@@ -45,11 +47,12 @@ def main(train_and_test_data,
 
     # If argument train_data is given, the finetune function is run
     elif train_data:
-        finetune(train_data, 
+        train_bert(train_data, 
             pre_trained_model,
             new_fine_tuned_model,
             n_epochs,
-            batch_size,
+            batch_size_train,
+            random_state,
             gradient_accumulation,
             learning_rate,
             warm_up,
@@ -57,9 +60,9 @@ def main(train_and_test_data,
     
     # If argument test is given, the evaluate function is run
     elif test:
-        evaluate(pre_trained_model, 
+        test_bert(pre_trained_model, 
             fine_tuned_model,
-            batch_size,
+            batch_size_test,
             threshold)
 
 
@@ -71,10 +74,11 @@ if __name__ == '__main__':
     default_fine_tuned_model = base_dir+'/models/fine_tuned_model/pytorch_model.bin'
     default_new_fine_tuned_model = base_dir+'/models/new_fine_tuned_model'
     default_test_size = 0.1
-    default_kfold = 1  
-    default_random_state = 123
+    default_kfold = 5  
+    default_random_state = None
     default_epochs = 10
-    default_batch_size = 4
+    default_batch_size_train = 4
+    default_batch_size_test = 2
     default_gradient_accumulation = 8
     default_learning_rate = 2e-5
     default_warm_up = 155
@@ -102,25 +106,27 @@ if __name__ == '__main__':
                         help='Filepath to save new fine-tuned model in', required=False)
 
 
-    parser.add_argument('-testsize', dest='test_size', type=float, required=False, default=default_test_size,
+    parser.add_argument('-test_size', dest='test_size', type=float, required=False, default=default_test_size,
                         help='Fraction of data to use for testing. Must be between 0 and 1. Default is 0.1.')
     parser.add_argument('-kfold', dest='n_kfold', type=int, required=False, default=default_kfold,
-                        help='The number of folds (k) to use in k-fold cross-validation, must be > 1 for kfold to be used and default is 1.')
-    parser.add_argument('-random_state', dest='random_state', default=default_random_state,
-                        help='A seed (integer) to use as the random state in the k-fold cross-validation. Default is 123.', required=False)
+                        help='The number of folds (k) to use in k-fold cross-validation, must be > 1 for kfold to be used and default is 5.')
+    parser.add_argument('-random_state', dest='random_state', type=int, default=default_random_state,
+                        help='A seed (integer) to use as the random state in the k-fold cross-validation. Default is None.', required=False)
 
 
     parser.add_argument('-epochs', dest='n_epochs', type=int, default=default_epochs,
                         help='Number of epochs to train for. Default is 10.', required=False)
-    parser.add_argument('-batch_size', dest='batch_size', type=int, default=default_batch_size,
-                        help='The batch size. Default is 4.', required=False)
+    parser.add_argument('-batch_size_train', dest='batch_size_train', type=int, default=default_batch_size_train,
+                        help='The batch size for training. Default is 4.', required=False)
+    parser.add_argument('-batch_size_test', dest='batch_size_test', type=int, default=default_batch_size_test,
+                        help='The batch size for testing. Default is 2.', required=False)
     parser.add_argument('-gradient_accumulation', dest='gradient_accumulation', type=int, default=default_gradient_accumulation,
                         help='The gradient accumulation. The batch size multiplied with the gradient accumulation is the actual batch size. Default is 8.', required=False)
-    parser.add_argument('-learning_rate', dest='learning_rate', default=default_learning_rate,
+    parser.add_argument('-learning_rate', dest='learning_rate', type=float, default=default_learning_rate,
                         help='The learning rate. Default is 2e-5.', required=False)
-    parser.add_argument('-warm_up', dest='warm_up', default=default_warm_up,
+    parser.add_argument('-warm_up', dest='warm_up', type=int, default=default_warm_up,
                         help='The number of warm-up steps, that is, the number of steps before the learning rate starts to decay. Default is 155.', required=False)
-    parser.add_argument('-threshold', dest='threshold', default=default_threshold,
+    parser.add_argument('-threshold', dest='threshold', type=float, default=default_threshold,
                         help='The threshold that binarizes the model output (0: label not present, 1: label present). Should be a number between 0 and 1, default is 0.5.', required=False)
 
     args = parser.parse_args()
@@ -135,7 +141,8 @@ if __name__ == '__main__':
         n_kfold=args.n_kfold,
         random_state=args.random_state, 
         n_epochs=args.n_epochs,
-        batch_size=args.batch_size,
+        batch_size_train=args.batch_size_train,
+        batch_size_test=args.batch_size_test,
         gradient_accumulation=args.gradient_accumulation,
         learning_rate=args.learning_rate,
         warm_up=args.warm_up,

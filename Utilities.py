@@ -76,7 +76,7 @@ class Trainer:
                 batch_f1_history.append(f1_score(y, output, average = 'micro'))
                 batch_acc_history.append(self.accuracy(y, output))
                 batch_recall_history.append(recall_score(y_true = y, y_pred = output, average = 'micro'))
-                batch_precision_history.append(precision_score(y_true = y, y_pred = output, average = 'micro'))
+                batch_precision_history.append(precision_score(y_true = y, y_pred = output, average = 'micro', zero_division=False))
             self.optim.step()
             self.model.zero_grad()
             self.epoch_f1_history.append(np.average(batch_f1_history))
@@ -104,14 +104,14 @@ class Trainer:
                         batch_f1_history.append(f1_score(y_val, output, average = 'micro'))
                         batch_acc_history.append(self.accuracy(y_val, output))
                         batch_recall_history.append(recall_score(y_true = y_val, y_pred = output, average = 'micro'))
-                        batch_precision_history.append(precision_score(y_true = y_val, y_pred = output, average = 'micro'))
+                        batch_precision_history.append(precision_score(y_true = y_val, y_pred = output, average = 'micro', zero_division=False))
                         dummy_predictions = np.concatenate((dummy_predictions, output), axis = 0)
                         dummy_labels = np.concatenate((dummy_labels, y_val), axis = 0)
                     predictions, true_labels = dummy_predictions[1:], dummy_labels[1:]
                     log_path = f'{save_path}/Fold__{fold + 1}/Epoch_{epoch + 1}_logs_fold.txt'
                     os.makedirs(os.path.dirname(log_path), exist_ok = True)
                     with open(log_path, 'w') as text_file:
-                        text_file.write(classification_report(true_labels, predictions))
+                        text_file.write(classification_report(true_labels, predictions, zero_division=False))
                     if np.average(batch_loss_history) < old_loss:
                         loss_epoch = epoch + 1
                         model_best_loss = deepcopy(self.model).cpu()
@@ -122,13 +122,13 @@ class Trainer:
                     self.val_epoch_recall_history.append(np.average(batch_recall_history))
                     self.val_epoch_precision_history.append(np.average(batch_precision_history))
 
-                print('\n%-30s %4.5f' % ('Validation loss', self.val_epoch_loss_history[-1]))
-                print('%-30s %4.5f' % ('Train loss', self.epoch_loss_history[-1]))
-                print('%-30s %4.2f' % ('Validation f1 score', self.val_epoch_f1_history[-1]))
-                print('%-30s %4.2f' % ('Train f1 score', self.epoch_f1_history[-1]))
+                print('\n%-30s %4.5f' % ('Validation loss (BCE)', self.val_epoch_loss_history[-1]))
+                print('%-30s %4.5f' % ('Train loss (BCE)', self.epoch_loss_history[-1]))
+                print('%-30s %4.2f' % ('Validation F1-micro score', self.val_epoch_f1_history[-1]))
+                print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
             else:
-                print('\n%-30s %4.5f' % ('Train loss', self.epoch_loss_history[-1]))
-                print('%-30s %4.2f' % ('Train f1 score', self.epoch_f1_history[-1]))
+                print('\n%-30s %4.5f' % ('Train loss (BCE)', self.epoch_loss_history[-1]))
+                print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
 
         if X_val:
             torch.save(model_best_loss, f = f'{save_path}/Fold__{fold + 1}/best_loss_model_epoch_{loss_epoch}.bin')
@@ -184,7 +184,6 @@ class Trainer:
         )
 
     def evaluate(self, X, num_labels, batch_size, thres = .5):
-        thres = float(thres)
         if torch.cuda.is_available():
             dev = 'cuda:0'
             self.model.to(dev)
@@ -216,7 +215,7 @@ class Trainer:
         ax3.plot(range(epochs), self.epoch_f1_history, label = 'Train')
         if len(self.val_epoch_f1_history) > 0:
             ax3.plot(range(epochs), self.val_epoch_f1_history, label = 'Validation')
-        ax3.set_title('F1-score'), ax3.legend(), ax3.grid(), ax3.set(ylabel = 'F1 score')
+        ax3.set_title('F1-micro score'), ax3.legend(), ax3.grid(), ax3.set(ylabel = 'F1-micro score')
 
         for ax in fig.get_axes():
             ax.label_outer()
@@ -239,7 +238,7 @@ class Trainer:
 
 
 class KFoldCrossVal:
-    def __init__(self, nfolds, trainer, RANDOM_STATE = 123):
+    def __init__(self, nfolds, trainer, RANDOM_STATE):
         self.nfolds = nfolds
         self.trainer = trainer
         self.random_state = np.random.seed(RANDOM_STATE)
@@ -270,7 +269,7 @@ class KFoldCrossVal:
                                                thres = thres)
             log_path = f'{save_path}/Fold__{fold + 1}/final_epoch_logs.txt'
             with open(log_path, 'w') as text_file:
-                text_file.write(classification_report(y_test, predictions))
+                text_file.write(classification_report(y_test, predictions, zero_division=False))
             dummy_predictions = np.concatenate((dummy_predictions, predictions), axis = 0)
             dummy_labels = np.concatenate((dummy_labels, np.array(y_test)), axis = 0)
 
@@ -279,9 +278,9 @@ class KFoldCrossVal:
         predictions = dummy_predictions[1:]
         true_labels = dummy_labels[1:]
         with open(f'{save_path}/final_combined_logs.txt', 'w') as text_file:
-            text_file.write(classification_report(true_labels, predictions))
-        print('Combined Results')
-        print(classification_report(true_labels, predictions))
+            text_file.write(classification_report(true_labels, predictions, zero_division=False))
+        print('\nCombined results for all folds of the data\n')
+        print(classification_report(true_labels, predictions, zero_division=False))
 
     def plot(self, loss, accuracy, f1):
         epochs = loss.shape[1]
@@ -289,7 +288,7 @@ class KFoldCrossVal:
         loss_std, loss_mean = np.std(loss, axis = 0), np.mean(loss, axis = 0)
         ax1.plot(range(epochs), loss_mean)
         ax1.fill_between(range(epochs), loss_mean - loss_std, loss_mean + loss_std, alpha = .2)
-        ax1.set_title('Validation loss'), ax1.legend(), ax1.grid(), ax1.set(ylabel = 'Loss')
+        ax1.set_title('Validation loss (BCE)'), ax1.legend(), ax1.grid(), ax1.set(ylabel = 'Loss')
         acc_std, acc_mean = np.std(accuracy, axis = 0), np.mean(accuracy, axis = 0)
         ax2.plot(range(epochs), acc_mean)
         ax2.fill_between(range(epochs), acc_mean - acc_std, acc_mean + acc_std, alpha = .2)
@@ -297,7 +296,7 @@ class KFoldCrossVal:
         f1_std, f1_mean = np.std(f1, axis = 0), np.mean(f1, axis = 0)
         ax3.plot(range(epochs), f1_mean)
         ax3.fill_between(range(epochs), f1_mean - f1_std, f1_mean + f1_std, alpha = .2)
-        ax3.set_title('Validation F1-score'), ax3.legend(), ax3.grid(), ax3.set(ylabel = 'F1 score')
+        ax3.set_title('Validation F1-micro score'), ax3.legend(), ax3.grid(), ax3.set(ylabel = 'F1-micro score')
 
         for ax in fig.get_axes():
             ax.label_outer()
