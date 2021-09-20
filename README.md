@@ -168,10 +168,6 @@ Nothing more than the argument itself is specified. After entering the line abov
                         is ***./models/fine_tuned_model/pytorch_model.bin***
 
 
-  `-batch_size`
-                        The batch size. **Default is 4**.
-
-
   `-threshold` 
 			The threshold that binarizes the model output
                         (0: label not present, 1: label present). Should be a
@@ -184,6 +180,10 @@ Nothing more than the argument itself is specified. After entering the line abov
 
   `-new_fine_tuned` 
                         Filepath to save new fine-tuned model in
+
+
+  `-batch_size_train`
+                        The batch size for training. **Default is 4**.
 
 
   `-epochs`      	The number of epochs to train for. **Default is 10**.
@@ -204,6 +204,13 @@ Nothing more than the argument itself is specified. After entering the line abov
                         **Default is 155**.
 
 
+#### For -test or -train_and_test
+
+
+  `-batch_size_train`
+                        The batch size for testing. **Default is 2**.
+
+
 #### For -train_and_test
 
 
@@ -216,12 +223,12 @@ Nothing more than the argument itself is specified. After entering the line abov
   `-kfold`        	
 			The number of folds (k) to use in k-fold cross-
                         validation, must be > 1 for kfold to be used and
-                        **default is 1**.
+                        **default is 5**.
 
 
   `-random_state`
                         A seed (integer) to use as the random state in the
-                        k-fold cross-validation. **Default is 123**.
+                        k-fold cross-validation. **Default is None**.
 
 
 ## Train/evaluate traditional supervised machine learning models
