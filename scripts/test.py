@@ -91,15 +91,39 @@ def test_baseline(trained_model, trained_vectorizer, filepath_stopwords):
 
     loaded_model = pickle.load(open(trained_model, 'rb'))
     vectorizer = pickle.load(open(trained_vectorizer, 'rb'))
+
+    while True:
+
+        input_choice = input('\nDo you want to:\n(1) predict the ICD codes of a single discharge summary or\n(2) evaluate the model by entering the filepath to a csv file with test data?\n\nEnter 1 or 2: ')
+
+        if input_choice == '1':
+
+            # Saving the terminal input as input_text
+            input_text = input('Enter the discharge summary: ')
+
+            text = preprocess_text_baseline(input_text, filepath_stopwords)
+
+            X_test = [text]
+            X_test = vectorizer.transform(X_test).toarray()
+            predictions = loaded_model.predict(X_test)
+
+            present_predictions(predictions)
+            break
+        
+        elif input_choice == '2':
+
+            test_data = input('Enter the filepath to the test data: ')
+
+            # Reading data
+            X_test, Y_test = preprocess_csv_bert(filepath = test_data)
+
+            # The held-out test set is used for evaluation
+            predictions = loaded_model.predict(X_test)
+            print('\n_____________________________________________________________________________\n')
+            print('\nResults for BERT classifier trained on all training data and tested on held-out test set\n')
+            print(classification_report(Y_test, predictions, zero_division=False))
+            break
     
-    # Saving the terminal input as input_text
-    input_text = input('Enter the discharge summary: ')
-
-    text = preprocess_text_baseline(input_text, filepath_stopwords)
-
-    X_test = [text]
-    X_test = vectorizer.transform(X_test).toarray()
-    predictions = loaded_model.predict(X_test)
-
-    present_predictions(predictions)
+        print('\nYou have to choose alternative 1 or 2\n')
+    
 
