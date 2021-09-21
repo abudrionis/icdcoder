@@ -273,8 +273,6 @@ class KFoldCrossVal:
             dummy_predictions = np.concatenate((dummy_predictions, predictions), axis = 0)
             dummy_labels = np.concatenate((dummy_labels, np.array(y_test)), axis = 0)
 
-            if fold == 0:
-                break
         predictions = dummy_predictions[1:]
         true_labels = dummy_labels[1:]
         with open(f'{save_path}/final_combined_logs.txt', 'w') as text_file:
