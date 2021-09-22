@@ -75,7 +75,7 @@ if __name__ == '__main__':
     default_fine_tuned_model = base_dir+'/models/fine_tuned_model/pytorch_model.bin'
     default_new_fine_tuned_model = base_dir+'/models/new_fine_tuned_model'
     default_test_size = 0.1
-    default_kfold = 5  
+    default_kfold = 10  
     default_random_state = None
     default_epochs = 10
     default_batch_size_train = 4
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     parser.add_argument('-test_size', dest='test_size', type=float, required=False, default=default_test_size,
                         help='Fraction of data to use for testing. Must be between 0 and 1. Default is 0.1.')
     parser.add_argument('-kfold', dest='n_kfold', type=int, required=False, default=default_kfold,
-                        help='The number of folds (k) to use in k-fold cross-validation, must be > 1 for kfold to be used and default is 5.')
+                        help='The number of folds (k) to use in k-fold cross-validation, must be > 1 for kfold to be used and default is 10.')
     parser.add_argument('-random_state', dest='random_state', type=int, default=default_random_state,
                         help='A seed (integer) to use as the random state in the k-fold cross-validation. Default is None.', required=False)
 

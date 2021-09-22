@@ -54,15 +54,15 @@ It is important that your file is named *labels.txt* and placed in the same plac
 
 `cd [filepath to where I want to put the project]`
 
-For example, creating a folder on the desktop named My-ICD-Project and entering
+For example, creating a folder on the desktop named my-ICD-project and entering
 
-`cd Desktop/My-ICD-Project`
+`cd Desktop/my-ICD-project`
 
 Then, you clone the project by entering
 
 `git clone https://github.com/sonjaremmer/icdcoder.git`
 
-*Note: when asked to enter your GitHub password, you should instead enter a personal access token which can be created by following these instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token*
+*Note: regarding to a new GitHub policy, when asked to enter your GitHub password, you should instead enter a personal access token which can be created by following these instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token*
 
 
 **(2)** If you want to use BERT to do the ICD classification, download the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
@@ -122,7 +122,7 @@ Train (fine-tune) using all of your dataset by using the entering
 
 For example
 
-`python3 BERT_coder.py -train /Volumes/SecretUSB/train_data.csv`
+`python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv`
 
 
 #### Fine-tuning and evaluating
@@ -139,7 +139,7 @@ Train and evaluate by entering
 
 For example
 
-`python3 BERT_coder.py -train /Volumes/SecretUSB/train_and_test_data.csv`
+`python3 BERT_coder.py -train /Volumes/secretUSB/train_and_test_data.csv`
 
 #### Testing only
 
@@ -162,21 +162,15 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 #### For -train, -train_and_test, or -test
 
+
   `-pre_trained` 
                         Filepath to pre-trained model. Default is
                         subfolder ***./models/pre_trained_model***
 
-
-  `-fine_tuned` 
-                        Filepath to fine-tuned (traind) model. Default
-                        is ***./models/fine_tuned_model/pytorch_model.bin***
-
-
   `-threshold` 
 			                  The threshold that binarizes the model output
                         (0: label not present, 1: label present). Should be a
-                        number between 0 and 1, **default is 0.5**.
-
+                        number between 0 and 1, **default is 0.5**. Note that the code could be changed to optimize the threshold during training or remove it and instead let the model suggest the top x number of codes.
 
 
 #### For -train or -train_and_test
@@ -186,11 +180,11 @@ Nothing more than the argument itself is specified. After entering the line abov
                         Filepath to save new fine-tuned model in
 
 
+  `-epochs`      	The number of epochs to train for. **Default is 10**.
+
+
   `-batch_size_train`
                         The batch size for training. **Default is 4**.
-
-
-  `-epochs`      	The number of epochs to train for. **Default is 10**.
 
 
   `-gradient_accumulation`
@@ -208,15 +202,18 @@ Nothing more than the argument itself is specified. After entering the line abov
                         **Default is 155**.
 
 
+  `-random_state`
+                        A seed (integer) to use as the random state when splitting the data. **Default is None**.
+
+
 #### For -test or -train_and_test
 
 
-  `-batch_size_train`
+  `-batch_size_test`
                         The batch size for testing. **Default is 2**.
 
 
 #### For -train_and_test
-
 
 
   `-testsize`		
@@ -227,13 +224,31 @@ Nothing more than the argument itself is specified. After entering the line abov
   `-kfold`        	
 			The number of folds (k) to use in k-fold cross-
                         validation, must be > 1 for kfold to be used and
-                        **default is 5**.
+                        **default is 10**.
 
 
-  `-random_state`
-                        A seed (integer) to use as the random state in the
-                        k-fold cross-validation. **Default is None**.
+#### For -test
 
+  `-fine_tuned` 
+                        Filepath to fine-tuned (traind) model. Default
+                        is ***./models/fine_tuned_model/pytorch_model.bin***
+
+
+### Examples of using main and optional arguments 
+
+Below, examples of how to use the main and optional arguments are displayed
+
+An example of how it could look like if you want to use all the data for training and not for testing, for example when wanting train a model to put in an application:
+
+`python3 BERT_coder.py -train_and_test /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_trained_model -epochs 15 -threshold 0.4 -batch_size_train 2 -gradient_accumulation 16 -learning_rate 1e-5 -warm_up 200 -random_state 123`
+
+In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to your pre-trained model is ./models/my_own_pre_trained_model, and the folder that you want the new fine-tuned model to be placed has the filepath ./models/my_new_fine_trained_model. You've set the number of epochs to 5, the binarizing threshold to 0.3, the training batch size to 2, the gradient accumulation to 16 (meaning your actual batch size is 2*16=32), the learning rate to 1e-5, the number of warm-up steps to 200, and the random state to 123. If you do not use any of the optional arguments and only specify the filepath to the training data, the default values of the optional arguments (see sections above) will be used. 
+
+An example of how it could look like if you want to use the data for both training and testing, for example if you want to compare multiple classifiers using 30-fold cross validation:
+
+`python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_trained_model -epochs 5 -threshold 0.3 -batch_size_train 6 -gradient_accumulation 6 -learning_rate 3e-5 -warm_up 400 -random_state 321 -batch_size_test 4 -test_size 0.3 -kfold 30` 
+
+Here, since -kfold is more than 1, k-fold cross validation will be used, and the held out test-set (of size test_size) will be left untouched. If -kfold 0 or -kfold 1 is used, k-fold cross validation will not be used and all training data (of size 1-test_size) will be used for training and the held-out test set (of size test_size) will be used for testing.
 
 ## Train/evaluate traditional supervised machine learning models
 
