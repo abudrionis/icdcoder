@@ -165,7 +165,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 
   `-pre_trained` 
                         Filepath to pre-trained model. Default is
-                        subfolder ***./models/pre_trained_model***
+                        subfolder *./models/pre_trained_model*
 
   `-threshold` 
 			                  The threshold that binarizes the model output
@@ -180,37 +180,37 @@ Nothing more than the argument itself is specified. After entering the line abov
                         Filepath to save new fine-tuned model in
 
 
-  `-epochs`      	The number of epochs to train for. **Default is 10**.
+  `-epochs`      	The number of epochs to train for. *Default is 10*.
 
 
   `-batch_size_train`
-                        The batch size for training. **Default is 4**.
+                        The batch size for training. *Default is 4*.
 
 
   `-gradient_accumulation`
                         The gradient accumulation. The batch size
                         multiplied with the gradient accumulation is the
-                        actual batch size. **Default is 8**.
+                        actual batch size. *Default is 8*.
 
 
   `-learning_rate`
-                        The learning rate. **Default is 2e-5**.
+                        The learning rate. *Default is 2e-5*.
 
 
   `-warm_up`      	The number of warm-up steps, that is, the number
                         of steps before the learning rate starts to decay.
-                        **Default is 155**.
+                        *Default is 155*.
 
 
   `-random_state`
-                        A seed (integer) to use as the random state when splitting the data. **Default is None**.
+                        A seed (integer) to use as the random state when splitting the data. *Default is None*.
 
 
 #### For -test or -train_and_test
 
 
   `-batch_size_test`
-                        The batch size for testing. **Default is 2**.
+                        The batch size for testing. *Default is 2*.
 
 
 #### For -train_and_test
@@ -218,20 +218,20 @@ Nothing more than the argument itself is specified. After entering the line abov
 
   `-testsize`		
 			Fraction of data to use for testing. Must be
-                        between 0 and 1. **Default is 0.1**.
+                        between 0 and 1. *Default is 0.1*.
 
 
   `-kfold`        	
 			The number of folds (k) to use in k-fold cross-
                         validation, must be > 1 for kfold to be used and
-                        **default is 10**. If k-fold is used, the held-out test set is not used. If k-fold is not used, testing is done on the held-out test set.
+                        *default is 10*. If k-fold is used, the held-out test set is not used. If k-fold is not used, testing is done on the held-out test set.
 
 
 #### For -test
 
   `-fine_tuned` 
                         Filepath to fine-tuned (traind) model. Default
-                        is ***./models/fine_tuned_model/pytorch_model.bin***
+                        is *./models/fine_tuned_model/pytorch_model.bin*
 
 
 ### Examples of using main and optional arguments 
