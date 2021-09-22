@@ -381,6 +381,6 @@ Here, since -kfold is more than 1, k-fold cross-validation will be used, and the
 
 An example of how it could look like if you want to use the data for testing only. This is done if you already have a trained model and want to see how it performs on unseen discharge summaries:
 
-`python3 baseline_coder.py -test -trained_model ./models/my_own_trained_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_trained_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
+`python3 baseline_coder.py -test -trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
 
 When using the -test argument, a question will follow asking if you want to test a single discharge summary that you enter directly, or if you want to test discharge summaries in a csv file. If the latter is the case, the csv file should adhere to the format specified in the section *How to get hold of/prepare datasets*.
