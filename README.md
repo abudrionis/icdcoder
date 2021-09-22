@@ -52,7 +52,7 @@ It is important that your file is named *labels.txt* and placed in the same plac
 
 **(1)** Download this repository by opening the terminal/command prompt and changing your working directory to where you want to put the project 
 
-`cd [filepath to where I want to put the project]`
+`cd [filepath to folder where I want to put the project]`
 
 For example, creating a folder on the desktop named my-ICD-project and entering
 
@@ -166,7 +166,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 
   `-pre_trained` 
-                        Filepath to pre-trained model. Default is
+                        Filepath to folder with pre-trained model. Default is
                         subfolder *./models/pre_trained_model*
 
   `-threshold` 
@@ -179,7 +179,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 
   `-new_fine_tuned` 
-                        Filepath to save new fine-tuned model in
+                        Filepath to folder to save new fine-tuned model in
 
 
   `-epochs`      	The number of epochs to train for. *Default is 10*.
@@ -232,7 +232,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 #### For -test
 
   `-fine_tuned` 
-                        Filename of fine-tuned (traind) model. Default
+                        Filepath to fine-tuned (traind) model. Default
                         is *./models/fine_tuned_model/pytorch_model.bin*
 
 
@@ -244,7 +244,7 @@ An example of how it could look like if you want to use all the data for trainin
 
 `python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_tuned_model -epochs 15 -threshold 0.4 -batch_size_train 2 -gradient_accumulation 16 -learning_rate 1e-5 -warm_up 200 -random_state 123`
 
-In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to your pre-trained model is ./models/my_own_pre_trained_model, and the folder that you want the new fine-tuned model to be placed has the filepath ./models/my_new_fine_tuned_model. You've set the number of epochs to 5, the binarizing threshold to 0.3, the training batch size to 2, the gradient accumulation to 16 (meaning your actual batch size is 2*16=32), the learning rate to 1e-5, the number of warm-up steps to 200, and the random state to 123. If you do not use any of the optional arguments and only specify the filepath to the training data, the default values of the optional arguments (see sections above) will be used. 
+In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to the folder with your pre-trained model is ./models/my_own_pre_trained_model, and the folder that you want the new fine-tuned model to be placed has the filepath ./models/my_new_fine_tuned_model. You've set the number of epochs to 5, the binarizing threshold to 0.3, the training batch size to 2, the gradient accumulation to 16 (meaning your actual batch size is 2*16=32), the learning rate to 1e-5, the number of warm-up steps to 200, and the random state to 123. If you do not use any of the optional arguments and only specify the filepath to the training data, the default values of the optional arguments (see sections above) will be used. 
 
 An example of how it could look like if you want to use the data for both training and testing, for example if you want to compare multiple classifiers using 30-fold cross validation:
 
