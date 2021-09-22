@@ -249,6 +249,7 @@ class KFoldCrossVal:
         dummy_labels = np.empty((1, len(Y[0])))
 
         for fold, (train_indices, test_indices) in enumerate(k_fold.split(X=X)):
+            print(f'\nFold {fold + 1}')
             new_trainer = deepcopy(self.trainer)
             x, y = [X[i] for i in train_indices], [Y[i] for i in train_indices]
             x_test, y_test = [X[i] for i in test_indices], [Y[i] for i in test_indices]
