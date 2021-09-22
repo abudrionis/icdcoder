@@ -84,6 +84,8 @@ mess up other projects by installing the versions of the packages used in this p
 
 `python3 -m venv venv`
 
+*Then, activate the virtual environment by entering*
+
 `source venv/bin/activate`
 
 
@@ -103,7 +105,7 @@ Now, you can **(i)** fine-tune the pre-trained BERT model, **(ii)**, fine-tune t
 
 `python3 BERT_coder.py` followed by one of the main arguments specified in the section "Fine-tuning and testing using the main arguments" below.
 
-*Note that for the commands to work, your working directory has to be the icdcoder folder*
+*Note that for the commands to work, your working directory has to be the icdcoder folder. Also, if your using a virtual environment, it should be activated*
 
 ### Fine-tuning and testing using the main arguments
 *Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
