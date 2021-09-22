@@ -92,9 +92,9 @@ if __name__ == '__main__':
 
     # Arguments -train, -train_and_test and -test are mutually exclusive and at least one is required
     mutually_exclusive.add_argument('-train', dest='only_train_data', type=str, default=None,
-                        help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to prepare dataset for training/testing.')
+                        help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
     mutually_exclusive.add_argument('-train_and_test', dest='train_and_test_data', type=str, default=None,
-                        help='Filepath to csv file used for training and testing. The file needs to follow the structure specified in the README section How to prepare dataset for training/testing.')
+                        help='Filepath to csv file used for training and testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
     mutually_exclusive.add_argument('-test', dest='only_test_data', action='store_true', default=None,
                         help='Use argument if you want to predict the ICD codes of an unseen discharge summary')
     

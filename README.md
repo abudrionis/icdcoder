@@ -115,7 +115,7 @@ Now, you can **(i)** train the pre-trained BERT model, **(ii)**, train the BERT 
 
 **(i)** `-train` 
                         Filepath to csv file used for training. The file
-                        needs to follow the structure specified in the README section *How to get hold of/prepare datasets*.
+                        needs to follow the structure specified in the section *How to get hold of/prepare datasets*.
 
 Train (fine-tune) using all of your dataset by using the entering
 
@@ -274,9 +274,9 @@ You are also ready to train and evaluate traditional supervised machine learning
 
 **(i)** `-train` 
                         Filepath to csv file used for training. The file
-                        needs to follow the structure specified in the README section *How to prepare dataset used for training*.
+                        needs to follow the structure specified in the section *How to get hold of/prepare datasets*.
 
-Train (fine-tune) using all of your dataset by using the entering
+Train using all of your dataset by using the entering
 
 
 `python3 BERT_coder.py -train [filepath to data]`
