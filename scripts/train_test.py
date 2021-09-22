@@ -61,14 +61,14 @@ def train_test_bert(train_and_test_data,
     # If n_kfold is 1 or less, the training data is not divided into folds and all training data is used for training
     if n_kfold <= 1:
 
-        # Splitting the training data into a new training set and a validation set. Note that the validation set is used during training and is not the held-out test set
+        # Splitting the training data into a new training set and a validation set
         X_train_new, X_val, Y_train_new, Y_val = train_test_split(X_train, Y_train,
                                                       test_size = 0.1,
                                                       random_state=random_state,
                                                       shuffle = True)
 
         # Training and saving the model
-        print('Training on all of the training data except 10 percent that is used for validation')
+        print('\nTraining on all of the training data\n')
         start_time = time.time()
         trainer.train(
             X = X_train_new,
@@ -84,7 +84,7 @@ def train_test_bert(train_and_test_data,
             save_path = new_fine_tuned_model)
     
         # The held-out test set is used for evaluation
-        print('Evaluating the fine-tuned model on the held-out test set of size', test_size)
+        print('\nEvaluating the fine-tuned model on the held-out test set of size', test_size, '\n')
         predictions = trainer.evaluate(X=X_test, batch_size=batch_size_test, thres=threshold, num_labels = len(Y[0]))
         print('\n_____________________________________________________________________________\n')
         print('\nResults for BERT classifier trained on all training data and tested on held-out test set\n')
@@ -94,7 +94,7 @@ def train_test_bert(train_and_test_data,
     # If n_kfold is more than 1, the training data is divided into n_kfold number of parts which are subject for k-fold cross-validation. The held-out set is left untouched.
     
     else:
-        print('Dividing the training data into', n_kfold, 'number of folds. The held-out test set of size', test_size, 'is left untouched')
+        print('\nDoing k-fold cross-validation with', n_kfold, 'number of folds. The held-out test set of size', test_size, 'is left untouched\n')
         start_time = time.time()
         kfold = KFoldCrossVal(nfolds = n_kfold, trainer = trainer, RANDOM_STATE = random_state)
         kfold.train(
