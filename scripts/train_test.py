@@ -68,6 +68,7 @@ def train_test_bert(train_and_test_data,
                                                       shuffle = True)
 
         # Training and saving the model
+        print('Training on all of the training data except 10 percent that is used for validation')
         start_time = time.time()
         trainer.train(
             X = X_train_new,
@@ -83,6 +84,7 @@ def train_test_bert(train_and_test_data,
             save_path = new_fine_tuned_model)
     
         # The held-out test set is used for evaluation
+        print('Evaluating the fine-tuned model on the held-out test set of size', test_size)
         predictions = trainer.evaluate(X=X_test, batch_size=batch_size_test, thres=threshold, num_labels = len(Y[0]))
         print('\n_____________________________________________________________________________\n')
         print('\nResults for BERT classifier trained on all training data and tested on held-out test set\n')
@@ -90,7 +92,9 @@ def train_test_bert(train_and_test_data,
         print('\n--- Training on all the training data and testing on the held-out test set using the BERT model took %s seconds ---' % (time.time() - start_time), '\n')
 
     # If n_kfold is more than 1, the training data is divided into n_kfold number of parts which are subject for k-fold cross-validation. The held-out set is left untouched.
+    
     else:
+        print('Dividing the training data into', n_kfold, 'number of folds. The held-out test set of size', test_size, 'is left untouched')
         start_time = time.time()
         kfold = KFoldCrossVal(nfolds = n_kfold, trainer = trainer, RANDOM_STATE = random_state)
         kfold.train(
