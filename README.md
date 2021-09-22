@@ -50,7 +50,7 @@ It is important that your file is named *labels.txt* and placed in the same plac
 ## How to get started 
 
 
-**(1)** Download this repository by opening the terminal/command prompt and changing your directory to where you want to put the project 
+**(1)** Download this repository by opening the terminal/command prompt and changing your working directory to where you want to put the project 
 
 `cd [filepath to where I want to put the project]`
 
@@ -73,7 +73,7 @@ If you want another pre-trained model, you need to put the associated *config.js
 **(3)** If you want to access a KB-BERT model fine-tuned on pseudonymized Swedish discharge summaries (the Stockholm EPR Gastro ICD-10 Pseudo Corpus version 2), contact Hercules Dalianis at hercules@dsv.su.se and put the pytorch_model.bin file in the folder *icdcoder/models/fine_tuned_model*. It is important that the model file is named *pytorch_model.bin*.
 
 
-**(4)** Change the directory to the icdcoder repository by going to the terminal/command prompt and entering
+**(4)** Change the working directory to the icdcoder repository by going to the terminal/command prompt and entering
 
 
 `cd icdcoder`
