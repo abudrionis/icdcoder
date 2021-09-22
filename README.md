@@ -369,7 +369,7 @@ Below, examples of how to use the main and optional arguments with the baseline_
 
 An example of how it could look like if you want to use all the data for training and not for testing, for example when wanting train a model to put in an application:
 
-`python3 baseline_coder.py -train_and_test /Volumes/secretUSB/train_data.csv -new_trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -classifier DT -random_state 123 -stopwords ./my_own_stopwords.txt`
+`python3 baseline_coder.py -train /Volumes/secretUSB/train_data.csv -new_trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -classifier DT -random_state 123 -stopwords ./my_own_stopwords.txt`
 
 In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to the new trained model is ./models/my_own_new_baseline_model/my_own_ICD_model.sav, and the file path to the new trained vectorizer is ./models/my_own_new_baseline_model/my_own_vectorizer.sav. The classifier is Decision Trees (DT), the random state to 123, and the filepath to your txt file with stopwords is ./my_own_stopwords.txt.
 
