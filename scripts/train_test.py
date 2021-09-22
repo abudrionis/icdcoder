@@ -209,5 +209,4 @@ def train_test_baseline(train_and_test_data,
         print('\nF1-micro for each fold of the data for', chosen_classifier, f1)
         # Using the lists that have collected all the folds' true and predicted classes to calculate the F1-micro for all the folds combined
         f1_combined = f1_score(trueclass, predictedclass, average = 'micro')
-        print(f1_combined)
 
