@@ -19,6 +19,7 @@ from skmultilearn.adapt import MLkNN
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import SVC
+import pickle
 import time
 
 
@@ -111,7 +112,9 @@ def train_test_bert(train_and_test_data,
 
 
 def train_test_baseline(train_and_test_data, 
-                stopwords, 
+                stopwords,
+                new_vectorizer,
+                new_trained_model, 
                 test_size, 
                 random_state, 
                 classifier,
@@ -126,9 +129,14 @@ def train_test_baseline(train_and_test_data,
     # Splitting data into train and held-out test set
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = test_size, random_state = random_state, shuffle = True)
 
-    # Creating an instantiation of the tf-idf vectorizer, fitting it to the discharge summaries and creating the tf-idf representation of the train and test sets
+    # Creating an instantiation of the tf-idf vectorizer, fitting it to the discharge summaries
     vectorizer = TfidfVectorizer()
     vectorizer = vectorizer.fit(X_train)
+
+    # Saving the vectorizer
+    pickle.dump(vectorizer, open(new_vectorizer, 'wb'))
+
+    # Creating the tf-idf representation of the train and test sets
     X_train_vectors = vectorizer.transform(X_train)
     X_test_vectors = vectorizer.transform(X_test)
 
@@ -146,6 +154,10 @@ def train_test_baseline(train_and_test_data,
         start_time = time.time()
         # Fitting the chosen classifier to the whole training set
         chosen_classifier.fit(X_train_vectors, Y_train)
+
+        # Saving the trained model
+        pickle.dump(chosen_classifier, open(new_trained_model, 'wb'))
+        
         print('\n_____________________________________________________________________________\n')
         print('\nResults for classifier', chosen_classifier, 'trained on all training data and tested on held-out test set\n')
         # Using the classifier to predict the held-out test set

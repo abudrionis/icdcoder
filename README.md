@@ -267,7 +267,10 @@ You are also ready to train and evaluate traditional supervised machine learning
 *Note that for the commands to work, your working directory has to be the icdcoder folder. Also, if your using a virtual environment, it should be activated. If it was a while ago you cloned the repository, make sure you have the latest version by entering* `git pull`
 
 ### Training and testing using the main arguments
-*Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
+
+The main arguments are the same for the basline_coder.py as for the BERT_coder.py.
+
+*Note that the arguments are mutually exclusive and one is required to run the baseline_coder.py script*
 
 
 #### Training only
@@ -279,35 +282,35 @@ You are also ready to train and evaluate traditional supervised machine learning
 Train using all of your dataset by using the entering
 
 
-`python3 BERT_coder.py -train [filepath to data]`
+`python3 baseline_coder.py -train [filepath to data]`
 
 For example
 
-`python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv`
+`python3 baseline_coder.py -train /Volumes/secretUSB/train_data.csv`
 
 
 #### Training and Testing
 
 **(ii)** `-train_and_test`
-			Filepath to csv file used for training and
+			                  Filepath to csv file used for training and
                         testing. The file needs to follow the structure
                         specified in the section *How to get hold of/prepare datasets*.
 
 Train and evaluate by entering
 
 
-`python3 BERT_coder.py -train_and_test [filepath to data]`
+`python3 baseline_coder.py -train_and_test [filepath to data]`
 
 For example
 
-`python3 BERT_coder.py -train /Volumes/secretUSB/train_and_test_data.csv`
+`python3 baseline_coder.py -train /Volumes/secretUSB/train_and_test_data.csv`
 
 #### Testing only
 
 **(iii)** `-test`    	Use argument if you want to predict the ICD
-                	codes of an unseen discharge summary
+                	    codes of an unseen discharge summary
 
-Predict the ICD codes of a single discharge summary already trained (fine-tuned) model by entering
+Predict the ICD codes of a single discharge summary already trained model by entering
 
 
 `python3 baseline_coder.py -test`
@@ -323,11 +326,25 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 #### For -train, -train_and_test, or -test
 
-
+  `-stopwords` 
+                        Filepath to txt file with stopwords. *Default is ./stopwords.txt*.
+                        
 
 #### For -train or -train_and_test
 
+  `-classifier` 
+                        The desired classifier. Enter SVM, KNN or DT which represent Support Vector Machines, K-Nearest Neigbors, and Decision Trees. *Default is SVM*.
 
+
+   `-new_trained_model` 
+                        Filepath to new traind model. Default is *./models/trained_baseline/ICD_model*.
+
+                        
+   `-new_vectorizer` 
+                        Filepath to new trained vectorizer. Default is *./models/trained_baseline/vectorizer.sav*.               
+
+
+                
 
 #### For -test or -train_and_test
 

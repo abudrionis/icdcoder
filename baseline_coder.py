@@ -28,27 +28,29 @@ def main(train_and_test_data,
     
     # If argument train_and_test_data is given, the finetune_evaluate function is run
     if train_and_test_data:
-        train_test_baseline(train_and_test_data, 
-        stopwords, 
-        test_size, 
-        random_state, 
-        classifier,
-        n_kfold)
+        train_test_baseline(train_and_test_data=train_and_test_data, 
+        stopwords=stopwords,
+        new_vectorizer=new_vectorizer,
+        new_trained_model=new_trained_model, 
+        test_size=test_size, 
+        random_state=random_state, 
+        classifier=classifier,
+        n_kfold=n_kfold)
 
     # If argument train_data is given, the finetune function is run
     elif train_data:
-        train_baseline(train_data, 
-            stopwords, 
-            new_vectorizer,
-            new_trained_model, 
-            random_state, 
-            classifier)
+        train_baseline(train_data=train_data, 
+            stopwords=stopwords, 
+            new_vectorizer=new_vectorizer,
+            new_trained_model=new_trained_model, 
+            random_state=random_state, 
+            classifier=classifier)
 
     # If argument test is given, the evaluate function is run
     elif test:
-        test_baseline(trained_model, 
-        vectorizer, 
-        stopwords)
+        test_baseline(trained_model=trained_model, 
+        vectorizer=vectorizer, 
+        stopwords=stopwords)
 
 
 if __name__ == '__main__':
@@ -79,14 +81,14 @@ if __name__ == '__main__':
     
     # The rest of the arguments are optional and while not all functions are compatible with all main arguments, passing a non-compatible argument will just be ignored 
     parser.add_argument('-stopwords', dest='stopwords', type=str, default=default_stopwords,
-                        help='Filepath to stopwords. Default is subfolder ./stopwords.txt', required=False)
+                        help='Filepath to txt file with stopwords. Default is ./stopwords.txt', required=False)
     parser.add_argument('-trained_model', dest='trained_model', type=str, default=default_trained_model,
                         help='Filepath to traind model. Note that if trained model is specified, the vectorizer needs to be specified as well. Default is ./models/trained_baseline/ICD_model', required=False)
     parser.add_argument('-vectorizer', dest='vectorizer', type=str, default=default_vectorizer,
-                        help='Filepath to traind vectorizer. Note that if vectorizer is specified, the trained model needs to be specified as well.  Default is ./models/trained_baseline/vectorizer.sav', required=False)
+                        help='Filepath to trained vectorizer. Note that if vectorizer is specified, the trained model needs to be specified as well.  Default is ./models/trained_baseline/vectorizer.sav', required=False)
     parser.add_argument('-new_trained_model', dest='new_trained_model', type=str, default=default_new_trained_model,
                         help='Filepath to new traind model. Default is ./models/trained_baseline/ICD_model', required=False)
-    parser.add_argument('-new_trained_vectorizer', dest='new_vectorizer', type=str, default=default_new_trained_vectorizer,
+    parser.add_argument('-new_vectorizer', dest='new_vectorizer', type=str, default=default_new_trained_vectorizer,
                         help='Filepath to new trained vectorizer. Default is ./models/trained_baseline/vectorizer.sav', required=False)
     parser.add_argument('-test_size', dest='test_size', type=str, default=default_test_size,
                         help='Fraction of data to use for testing. Must be between 0 and 1. Default is 0.1.', required=False)
