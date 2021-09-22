@@ -48,7 +48,7 @@ def main(train_and_test_data,
 
     # If argument test is given, the evaluate function is run
     elif test:
-        test_baseline(test=test,
+        test_baseline(
             trained_model=trained_model, 
             vectorizer=vectorizer, 
             stopwords=stopwords)

@@ -88,10 +88,10 @@ def test_bert(pre_trained_model, fine_tuned_model, batch_size_test, threshold):
         
 
 
-def test_baseline(trained_model, trained_vectorizer, filepath_stopwords):
+def test_baseline(trained_model, vectorizer, stopwords):
 
     loaded_model = pickle.load(open(trained_model, 'rb'))
-    vectorizer = pickle.load(open(trained_vectorizer, 'rb'))
+    vectorizer = pickle.load(open(vectorizer, 'rb'))
 
     while True:
 
@@ -102,7 +102,7 @@ def test_baseline(trained_model, trained_vectorizer, filepath_stopwords):
             # Saving the terminal input as input_text
             input_text = input('Enter the discharge summary: ')
 
-            text = preprocess_text_baseline(input_text, filepath_stopwords)
+            text = preprocess_text_baseline(input_text, stopwords)
 
             X_test = [text]
             X_test = vectorizer.transform(X_test).toarray()
