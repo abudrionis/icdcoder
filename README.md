@@ -62,6 +62,8 @@ Then, you clone the project by entering
 
 `git clone https://github.com/sonjaremmer/icdcoder.git`
 
+*Note: when asked to enter your GitHub password, you should instead enter a personal access token which can be created by following these instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token*
+
 
 **(2)** If you want to use BERT to do the ICD classification, download the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
 
@@ -169,7 +171,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 
 
   `-threshold` 
-			The threshold that binarizes the model output
+			                  The threshold that binarizes the model output
                         (0: label not present, 1: label present). Should be a
                         number between 0 and 1, **default is 0.5**.
 
