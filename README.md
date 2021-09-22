@@ -242,7 +242,7 @@ Below, examples of how to use the main and optional arguments are displayed
 
 An example of how it could look like if you want to use all the data for training and not for testing, for example when wanting train a model to put in an application:
 
-`python3 BERT_coder.py -train_and_test /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_trained_model -epochs 15 -threshold 0.4 -batch_size_train 2 -gradient_accumulation 16 -learning_rate 1e-5 -warm_up 200 -random_state 123`
+`python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_trained_model -epochs 15 -threshold 0.4 -batch_size_train 2 -gradient_accumulation 16 -learning_rate 1e-5 -warm_up 200 -random_state 123`
 
 In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to your pre-trained model is ./models/my_own_pre_trained_model, and the folder that you want the new fine-tuned model to be placed has the filepath ./models/my_new_fine_trained_model. You've set the number of epochs to 5, the binarizing threshold to 0.3, the training batch size to 2, the gradient accumulation to 16 (meaning your actual batch size is 2*16=32), the learning rate to 1e-5, the number of warm-up steps to 200, and the random state to 123. If you do not use any of the optional arguments and only specify the filepath to the training data, the default values of the optional arguments (see sections above) will be used. 
 
