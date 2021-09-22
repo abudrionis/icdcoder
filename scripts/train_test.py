@@ -173,7 +173,7 @@ def train_test_baseline(train_and_test_data,
             # Putting the true classes of each fold in the trueclass list
             trueclass.extend(y_true)
             # If the classifier is MLKNN, the predicted classes of each fold are transformed to an array before put in the predictedclass list (only needed for MLKNN)
-            if classifier == MLkNN():
+            if classifier == 'KNN':
                 predictedclass.extend(y_pred.toarray())
             # For all the other classififers, the predicted classes of each fold are put directly in the predictedclass list
             else:
