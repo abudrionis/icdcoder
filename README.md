@@ -99,23 +99,23 @@ mess up other projects by installing the versions of the packages used in this p
 **(6)** You are ready to train and/or evaluate your models. Follow the instructions in the sections below to do so
 
 
-## Fine-tune/evaluate BERT model
+## Train/test BERT model
 
-Now, you can **(i)** fine-tune the pre-trained BERT model, **(ii)**, fine-tune the BERT pre-trained model and evaluate the newly fine-tuned model, or **(iii)** use and already fine-tuned model to predict the ICD codes of an unseen discharge summary. This is done by entering 
+Now, you can **(i)** train the pre-trained BERT model, **(ii)**, train the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already trained model to predict the ICD codes of an unseen discharge summary. This is done by entering 
 
-`python3 BERT_coder.py` followed by one of the main arguments specified in the section "Fine-tuning and testing using the main arguments" below.
+`python3 BERT_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
 
 *Note that for the commands to work, your working directory has to be the icdcoder folder. Also, if your using a virtual environment, it should be activated. If it was a while ago you cloned the repository, make sure you have the latest version by entering* `git pull`
 
-### Fine-tuning and testing using the main arguments
+### Training and testing using the main arguments
 *Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
 
 
-#### Fine-tuning only
+#### Training only
 
 **(i)** `-train` 
                         Filepath to csv file used for training. The file
-                        needs to follow the structure specified in the README section How to prepare dataset used for fine-tuning.
+                        needs to follow the structure specified in the README section *How to get hold of/prepare datasets*.
 
 Train (fine-tune) using all of your dataset by using the entering
 
@@ -127,12 +127,12 @@ For example
 `python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv`
 
 
-#### Fine-tuning and evaluating
+#### Training and Testing
 
 **(ii)** `-train_and_test`
 			Filepath to csv file used for training and
                         testing. The file needs to follow the structure
-                        specified in the README section How to prepare dataset used for fine-tuning.
+                        specified in the section *How to prepare dataset used for .
 
 Train and evaluate by entering
 
@@ -260,4 +260,82 @@ When using the -test argument, a question will follow asking if you want to test
 
 ## Train/evaluate traditional supervised machine learning models
 
-You are also ready to train and evaluate traditional supervised machine learning models...
+You are also ready to train and evaluate traditional supervised machine learning models. As with the BERT model, you can also use traditional supervised machine learning models to **(i)** train, **(ii)**, train and evaluate the trained model, or **(iii)** use an already trained model to predict the ICD codes of an unseen discharge summary. This is done by entering 
+
+`python3 baseline_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
+
+*Note that for the commands to work, your working directory has to be the icdcoder folder. Also, if your using a virtual environment, it should be activated. If it was a while ago you cloned the repository, make sure you have the latest version by entering* `git pull`
+
+### Training and testing using the main arguments
+*Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
+
+
+#### Training only
+
+**(i)** `-train` 
+                        Filepath to csv file used for training. The file
+                        needs to follow the structure specified in the README section *How to prepare dataset used for training*.
+
+Train (fine-tune) using all of your dataset by using the entering
+
+
+`python3 BERT_coder.py -train [filepath to data]`
+
+For example
+
+`python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv`
+
+
+#### Training and Testing
+
+**(ii)** `-train_and_test`
+			Filepath to csv file used for training and
+                        testing. The file needs to follow the structure
+                        specified in the section *How to get hold of/prepare datasets*.
+
+Train and evaluate by entering
+
+
+`python3 BERT_coder.py -train_and_test [filepath to data]`
+
+For example
+
+`python3 BERT_coder.py -train /Volumes/secretUSB/train_and_test_data.csv`
+
+#### Testing only
+
+**(iii)** `-test`    	Use argument if you want to predict the ICD
+                	codes of an unseen discharge summary
+
+Predict the ICD codes of a single discharge summary already trained (fine-tuned) model by entering
+
+
+`python3 baseline_coder.py -test`
+
+Nothing more than the argument itself is specified. After entering the line above, you will be asked to enter the discharge summary you want to predict the ICD codes for.
+
+
+### Customize run using the optional arguments
+
+*To get a description of all arguments in the terminal/command prompt, use the help argument by entering the following*
+
+`python3 baseline_coder.py -h`
+
+#### For -train, -train_and_test, or -test
+
+
+
+#### For -train or -train_and_test
+
+
+
+#### For -test or -train_and_test
+
+
+
+#### For -train_and_test
+
+
+
+#### For -test
+
