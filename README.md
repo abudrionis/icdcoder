@@ -232,7 +232,7 @@ Nothing more than the argument itself is specified. After entering the line abov
 #### For -test
 
   `-fine_tuned` 
-                        Filepath to fine-tuned (traind) model. Default
+                        Filename of fine-tuned (traind) model. Default
                         is *./models/fine_tuned_model/pytorch_model.bin*
 
 
@@ -254,7 +254,7 @@ Here, since -kfold is more than 1, k-fold cross validation will be used, and the
 
 An example of how it could look like if you want to use the data for testing only. This is done if you already have a fine-tuned model and want to see how it performs on unseen discharge summaries:
 
-`python3 BERT_coder.py -test -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model -threshold 0.6 -batch_size_test 1`
+`python3 BERT_coder.py -test -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.6 -batch_size_test 1`
 
 When using the -test argument, a question will follow asking if you want to test a single discharge summary that you enter directly, or if you want to test discharge summaries in a csv file. If the latter is the case, the csv file should adhere to the format specified in the section *How to get hold of/prepare datasets*. 
 
