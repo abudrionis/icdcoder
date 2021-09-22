@@ -67,6 +67,7 @@ def train_test_bert(train_and_test_data,
                                                       random_state=random_state,
                                                       shuffle = True)
 
+        # Training and saving the model
         start_time = time.time()
         trainer.train(
             X = X_train_new,

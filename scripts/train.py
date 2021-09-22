@@ -19,6 +19,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import SVC
 import pickle
+import time
 np.set_printoptions(threshold=np.inf)
 
 
@@ -55,6 +56,7 @@ def train_bert(train_data,
     trainer = Trainer(model = bert_model, tokenizer = bert_tokenizer)
 
     # Training and saving the model
+    start_time = time.time()
     trainer.train(
         X = X_train,
         Y = Y_train,
@@ -68,6 +70,7 @@ def train_bert(train_data,
         warm_up = warm_up,
         save_path = new_fine_tuned_model)
 
+    print('\n--- Training on all the training data using the BERT model took %s seconds ---' % (time.time() - start_time), '\n')
 
 def train_baseline(train_data, 
             stopwords, 
@@ -101,10 +104,13 @@ def train_baseline(train_data,
         chosen_classifier = OneVsRestClassifier(SVC(random_state=random_state))
 
     # Fitting the chosen classifier to the training data
+    start_time = time.time()
     chosen_classifier = chosen_classifier.fit(X_train_vectors, Y_train)
 
     # Saving the trained model
     pickle.dump(chosen_classifier, open(new_trained_model, 'wb'))
+
+    print('\n--- Training on all the training data using', chosen_classifier, 'took %s seconds ---' % (time.time() - start_time), '\n')
 
 
 
