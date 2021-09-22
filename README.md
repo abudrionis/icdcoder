@@ -170,7 +170,7 @@ Nothing more than the argument itself is specified. After entering the line abov
   `-threshold` 
 			                  The threshold that binarizes the model output
                         (0: label not present, 1: label present). Should be a
-                        number between 0 and 1, **default is 0.5**. Note that the code could be changed to optimize the threshold during training or remove it and instead let the model suggest the top x number of codes.
+                        number between 0 and 1, *default is 0.5*. Note that the code could be changed to optimize the threshold during training or remove it and instead let the model suggest the top x number of codes.
 
 
 #### For -train or -train_and_test
