@@ -375,7 +375,7 @@ In this example, the file path to your training data is /Volumes/secretUSB/train
 
 An example of how it could look like if you want to use the data for both training and testing, for example if you want to compare multiple classifiers using 30-fold cross-validation:
 
-`python3 baseline_coder.py -train_and_test /Volumes/secretUSB/train_and_test_data.csv -new_trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -new_vectorizer /models/my_own_new_baseline_model/my_own_vectorizer.sav -classifier KNN -random_state 321 -test_size 0.3 -kfold 30 -stopwords ./my_own_stopwords.txt` 
+`python3 baseline_coder.py -train_and_test /Volumes/secretUSB/train_and_test_data.csv -new_trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -classifier KNN -random_state 321 -test_size 0.3 -kfold 30 -stopwords ./my_own_stopwords.txt` 
 
 Here, since -kfold is more than 1, k-fold cross-validation will be used, and the held out test-set (of size test_size) will be left untouched. If -kfold 0 or -kfold 1 is used, k-fold cross-validation will not be used and all training data (of size 1-test_size) will be used for training and the held-out test set (of size test_size) will be used for testing. In this latter scenario, the trained model and vectorizer are saved. 
 
