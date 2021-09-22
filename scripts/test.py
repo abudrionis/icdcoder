@@ -2,6 +2,7 @@
 Script containing test function activated when main argument -test is used
 
 Author: Sonja Remmer
+
 '''
 
 from scripts.preprocess import preprocess_csv_bert, preprocess_text_baseline
