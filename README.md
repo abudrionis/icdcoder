@@ -12,13 +12,13 @@ The purpose of this project is to facilitate:
 
 **(2)** evaluating how these trained models performs in pairing unseen discharge summaries with the correct ICD codes
 
-## How to get hold of/prepare dataset used for training 
+## How to get hold of/prepare datasets
 
-To obtain a valid dataset to use for training the models use one of the two options below.
+To obtain a valid dataset to use for training and testing the models use one of the two options below.
 
 **(1)** Contact Hercules Dalianis at hercules@dsv.su.se to get hold of the Swedish EPR Gastro ICD-10 Pseudo Corpus containing approximately 6000 Swedish discharge summaries from 5000 patients.  
 
-**(2)** If you want to train the models using your own data, the data needs to be in a csv file adhering to the following format:
+**(2)** If you want to train and test the models using your own data, the data needs to be in a csv file adhering to the following format:
 
 ***Column 1***: *Patient ID (optional)*
 
@@ -224,7 +224,7 @@ Nothing more than the argument itself is specified. After entering the line abov
   `-kfold`        	
 			The number of folds (k) to use in k-fold cross-
                         validation, must be > 1 for kfold to be used and
-                        **default is 10**.
+                        **default is 10**. If k-fold is used, the held-out test set is not used. If k-fold is not used, testing is done on the held-out test set.
 
 
 #### For -test
@@ -246,9 +246,15 @@ In this example, the file path to your training data is /Volumes/secretUSB/train
 
 An example of how it could look like if you want to use the data for both training and testing, for example if you want to compare multiple classifiers using 30-fold cross validation:
 
-`python3 BERT_coder.py -train /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_trained_model -epochs 5 -threshold 0.3 -batch_size_train 6 -gradient_accumulation 6 -learning_rate 3e-5 -warm_up 400 -random_state 321 -batch_size_test 4 -test_size 0.3 -kfold 30` 
+`python3 BERT_coder.py -train_and_test /Volumes/secretUSB/train_and_test_data.csv -pre_trained ./models/my_own_pre_trained_model -new_fine_tuned ./models/my_new_fine_trained_model -epochs 5 -threshold 0.3 -batch_size_train 6 -gradient_accumulation 6 -learning_rate 3e-5 -warm_up 400 -random_state 321 -batch_size_test 4 -test_size 0.3 -kfold 30` 
 
 Here, since -kfold is more than 1, k-fold cross validation will be used, and the held out test-set (of size test_size) will be left untouched. If -kfold 0 or -kfold 1 is used, k-fold cross validation will not be used and all training data (of size 1-test_size) will be used for training and the held-out test set (of size test_size) will be used for testing.
+
+An example of how it could look like if you want to use the data for testing only. This is done if you already have a fine-tuned model and want to see how it performs on unseen discharge summaries:
+
+`python3 BERT_coder.py -test /Volumes/secretUSB/train_data.csv -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model -threshold 0.6 -batch_size_test 1`
+
+When using the -test argument, a question will follow asking if you want to test a single discharge summary that you enter directly, or if you want to test discharge summaries in a csv file. If the latter is the case, the csv file should adhere to the format specified in the section *How to get hold of/prepare datasets*. 
 
 ## Train/evaluate traditional supervised machine learning models
 

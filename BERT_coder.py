@@ -110,7 +110,7 @@ if __name__ == '__main__':
     parser.add_argument('-test_size', dest='test_size', type=float, required=False, default=default_test_size,
                         help='Fraction of data to use for testing. Must be between 0 and 1. Default is 0.1.')
     parser.add_argument('-kfold', dest='n_kfold', type=int, required=False, default=default_kfold,
-                        help='The number of folds (k) to use in k-fold cross-validation, must be > 1 for kfold to be used and default is 10.')
+                        help='The number of folds (k) to use in k-fold cross-validation, must be > 1 for kfold to be used and default is 10. If k-fold is used, the held-out test set is not used. If k-fold is not used, testing is done on the held-out test set.')
     parser.add_argument('-random_state', dest='random_state', type=int, default=default_random_state,
                         help='A seed (integer) to use as the random state in the k-fold cross-validation. Default is None.', required=False)
 
