@@ -1,7 +1,5 @@
 # Multi-label ICD-10 Classification
-*Note that this project was done using Python 3.7.3*
-
-*If you are experiencing issues, the Python version may be the problem.*
+*Note that this project was done using Python 3.7.3* If you are experiencing issues, the Python version may be the problem.*
 
 Code written by Anastasios Lamproudis and Sonja Remmer
 
