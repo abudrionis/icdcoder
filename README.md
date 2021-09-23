@@ -168,7 +168,7 @@ For example
 
 #### Testing only
 
-**(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section How to prepare dataset used for fine-tuning.
+**(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section *How to get hold of/prepare datasets*.
 
 
 Evaluate an entire file by entering
