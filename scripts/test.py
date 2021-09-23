@@ -5,9 +5,7 @@ Author: Sonja Remmer
 
 '''
 
-from icdcoder.scripts.preprocess import preprocess_csv_baseline
-from matplotlib.pyplot import contour
-from scripts.preprocess import preprocess_csv_bert, preprocess_text_baseline
+from scripts.preprocess import preprocess_csv_bert, preprocess_csv_baseline, preprocess_text_baseline
 from transformers import AutoTokenizer
 from Utilities import Trainer
 import torch
