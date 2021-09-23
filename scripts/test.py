@@ -118,7 +118,7 @@ def test_baseline(trained_model, vectorizer, stopwords):
                     predictions = loaded_model.predict(X_test).toarray()
 
             except:
-                continue
+                break
         
             present_predictions(predictions)
             break
