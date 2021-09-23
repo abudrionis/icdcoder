@@ -272,7 +272,7 @@ class KFoldCrossVal:
             log_path = f'{save_path}/Fold__{fold + 1}/final_epoch_logs.txt'
             with open(log_path, 'w') as text_file:
                 text_file.write(classification_report(y_test, predictions, zero_division=False))
-            pkl.dump(self.history, open(f'{save_path}/Fold__{fold + 1}/history.pkl', 'wb'))
+            pkl.dump(new_trainer.history, open(f'{save_path}/Fold__{fold + 1}/history.pkl', 'wb'))
             dummy_predictions = np.concatenate((dummy_predictions, predictions), axis = 0)
             dummy_labels = np.concatenate((dummy_labels, np.array(y_test)), axis = 0)
 
