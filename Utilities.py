@@ -261,7 +261,6 @@ class KFoldCrossVal:
                               gradient_accumulation = gradient_accumulation,
                               thres = thres,
                               warm_up = warm_up,
-                              fold = fold,
                               return_best_model = True,
                               save_path = save_path
                               )
