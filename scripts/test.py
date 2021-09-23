@@ -114,6 +114,8 @@ def test_baseline(trained_model, vectorizer, stopwords):
             # Dealing with the fact that MLKNN() outputs a different format
             if type(predictions) == 'scipy.sparse.lil.lil_matrix':
                 predictions = loaded_model.predict(X_test).toarray()
+            
+            print(predictions.getformat())
 
             present_predictions(predictions)
             break
