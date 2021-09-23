@@ -107,7 +107,8 @@ def train_test_bert(train_and_test_data,
             learning_rate = learning_rate,
             thres = threshold,
             warm_up = warm_up,
-            save_path = new_fine_tuned_model)
+            save_path = new_fine_tuned_model,
+            save_model = False)
         print('\n--- Cross-validation of the training set using the BERT model took %s seconds ---' % (time.time() - start_time), '\n')
 
 

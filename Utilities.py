@@ -39,7 +39,8 @@ class Trainer:
         self.history = {}
 
     def train(self, X, Y, epochs: int, batch_size: int, learning_rate: float, gradient_accumulation: int = 1, X_val = None,
-              Y_val = None, thres: float = .5, warm_up: int = 155, return_best_model = True, save_path = './'):
+              Y_val = None, thres: float = .5, warm_up: int = 155, return_best_model: bool = True, save_path: str = './',
+              save_model: bool = True):
         if torch.cuda.is_available():
             dev = 'cuda:0'
             self.model.to(dev)
@@ -127,14 +128,16 @@ class Trainer:
                 print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
 
         if X_val:
-            torch.save(model_best_loss, f = f'{save_path}/best_loss_model_epoch_{loss_epoch}.bin')
+            if save_model:
+                torch.save(model_best_loss, f = f'{save_path}/best_loss_model_epoch_{loss_epoch}.bin')
             self.history['validation loss'] = self.val_epoch_loss_history
             self.history['validation accuracy'] = self.val_epoch_acc_history
             self.history['validation f1 score'] = self.val_epoch_f1_history
             self.history['validation recall'] = self.val_epoch_recall_history
             self.history['validation precision'] = self.val_epoch_precision_history
         else:
-            torch.save(self.model.cpu(), f = f'{save_path}/model_epoch_{epochs}.bin')
+            if save_model:
+                torch.save(self.model.cpu(), f = f'{save_path}/model_epoch_{epochs}.bin')
         self.history['train loss'] = self.epoch_loss_history
         self.history['train accuracy'] = self.epoch_acc_history
         self.history['train f1 score'] = self.epoch_f1_history
@@ -240,8 +243,9 @@ class KFoldCrossVal:
         self.trainer = trainer
         self.random_state = np.random.seed(RANDOM_STATE)
 
-    def train(self, X, Y, epochs = 10, batch_size = 4, learning_rate = 2e-5, gradient_accumulation = 8, thres = 0.5, warm_up = 155, save_path='./'):
-        k_fold = KFold(n_splits = self.nfolds, random_state = self.random_state, shuffle = True)
+    def train(self, X, Y, epochs: int = 10, batch_size: int = 4, learning_rate: float = 2e-5, gradient_accumulation: int = 8,
+        thres: float = 0.5, warm_up: int = 155, save_path: str = './', save_model: bool = True):
+        k_fold = KFold(n_splits = self.nfolds, random_state = self.random_state, shuffle = True, )
         dummy_predictions = np.empty((1, len(Y[0])))
         dummy_labels = np.empty((1, len(Y[0])))
 
@@ -262,7 +266,8 @@ class KFoldCrossVal:
                               thres = thres,
                               warm_up = warm_up,
                               return_best_model = True,
-                              save_path = save_path
+                              save_path = save_path,
+                              save_model = save_model
                               )
             predictions = new_trainer.evaluate(X = x_test,
                                                num_labels = self.trainer.model.num_labels,
