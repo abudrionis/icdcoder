@@ -43,7 +43,7 @@ def preprocess_csv_baseline(filepath, filepath_stopwords):
     stop_words = stop_words[0]
     data[data.columns[1]] = data[data.columns[1]].apply(lambda x:' '.join([word for word in x.split() if word not in (stop_words)]))
     print('\n__________________________\n')
-    print('\First rows of dataset without upper case letters, punctuation, and stopwords\n\n', data.head(10))
+    print('\nFirst rows of dataset without upper case letters, punctuation, and stopwords\n\n', data.head(10))
 
     # The discharge summaries should be placed in the second column
     X = data[data.columns[1]].to_numpy()
