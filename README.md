@@ -118,7 +118,7 @@ Try running:
 
 ## Train/test BERT model
 
-Now, you can **(i)** train the pre-trained BERT model, **(ii)**, train the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already trained model to predict the ICD codes of an unseen discharge summary. This is done by entering 
+Now, you can **(i)** train the pre-trained BERT model, **(ii)**, train the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already trained model to predict the ICD codes of nseen discharge summaries. This is done by entering 
 
 `python3 BERT_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
 
@@ -297,7 +297,7 @@ Here, the argument -test_text is used to predict the ICD codes of the the discha
 
 ## Train/evaluate traditional supervised machine learning models
 
-You are also ready to train and evaluate traditional supervised machine learning models. As with the BERT model, you can also use traditional supervised machine learning models to **(i)** train, **(ii)**, train and evaluate the trained model, or **(iii)** use an already trained model to predict the ICD codes of an unseen discharge summary. This is done by entering 
+You are also ready to train and evaluate traditional supervised machine learning models. As with the BERT model, you can also use traditional supervised machine learning models to **(i)** train, **(ii)**, train and evaluate the trained model, or **(iii)** use an already trained model to predict the ICD codes of unseen discharge summaries. This is done by entering 
 
 `python3 baseline_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
 
