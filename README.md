@@ -22,7 +22,7 @@ The purpose of this project is to facilitate:
 
 To obtain a valid dataset to use for training and testing the models use one of the two options below.
 
-**(1)** Contact Hercules Dalianis at hercules@dsv.su.se to get hold of the Swedish EPR Gastro ICD-10 Pseudo Corpus containing approximately 6000 Swedish discharge summaries from 5000 patients.  
+**(1)** Contact [Hercules Dalianis](hercules@dsv.su.se) to get hold of the Swedish EPR Gastro ICD-10 Pseudo Corpus containing approximately 6000 Swedish discharge summaries from 5000 patients.  
 
 **(2)** If you want to train and test the models using your own data, the data needs to be in a csv file adhering to the following format:
 
@@ -76,7 +76,7 @@ Cloning is better than downloading as a zip file since that allows you to easily
 If you want another pre-trained model, you need to put the associated *config.json* and *vocab.txt* file in the *icdcoder/models/pre_trained_model* folder as well. This is not needed if you are working with *bert-base-swedish-cased* since those config and vocab files are already in the project folder. 
 
 
-**(3)** If you want to access a KB-BERT model fine-tuned on pseudonymized Swedish discharge summaries (the blocks version of the Stockholm EPR Gastro ICD-10 Pseudo Corpus version 2), contact Hercules Dalianis at hercules@dsv.su.se and put the pytorch_model.bin file in the folder *icdcoder/models/fine_tuned_model*. It is important that the model file is named *pytorch_model.bin*.
+**(3)** If you want to access a KB-BERT model fine-tuned on pseudonymized Swedish discharge summaries (the blocks version of the Stockholm EPR Gastro ICD-10 Pseudo Corpus version 2), contact [Hercules Dalianis](hercules@dsv.su.se) and put the pytorch_model.bin file in the folder *icdcoder/models/fine_tuned_model*. It is important that the model file is named *pytorch_model.bin*.
 
 
 **(4)** Change the working directory to the icdcoder repository by going to the terminal/command prompt and entering
