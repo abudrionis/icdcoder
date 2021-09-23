@@ -122,9 +122,18 @@ def test_baseline_text(test_text, trained_model, vectorizer, stopwords):
     predictions = loaded_model.predict(X_test)
 
     # Dealing with the fact that MLKNN() outputs a different format
-    try:
-        if predictions.getformat() == 'lil':
-            predictions = loaded_model.predict(X_test).toarray()
+    #try:
+        #if predictions.getformat() == 'lil':
+            #predictions = loaded_model.predict(X_test).toarray()
 
-    finally: 
+    #finally: 
+
+    if type(predictions).__module__ == 'numpy':
+
         present_predictions(predictions)
+    
+    else:
+
+        predictions = loaded_model.predict(X_test).toarray()
+        present_predictions(predictions)
+
