@@ -369,18 +369,18 @@ Below, examples of how to use the main and optional arguments with the baseline_
 
 An example of how it could look like if you want to use all the data for training and not for testing, for example when wanting train a model to put in an application:
 
-`python3 baseline_coder.py -train /Volumes/secretUSB/train_data.csv -new_trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -classifier DT -random_state 123 -stopwords ./my_own_stopwords.txt`
+`python3 baseline_coder.py -train /Volumes/secretUSB/train_data.csv -new_trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -classifier DT -random_state 123 -stopwords ./my_own_stopwords.txt`
 
-In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to the new trained model is ./models/my_own_new_baseline_model/my_own_ICD_model.sav, and the file path to the new trained vectorizer is ./models/my_own_new_baseline_model/my_own_vectorizer.sav. The classifier is Decision Trees (DT), the random state to 123, and the filepath to your txt file with stopwords is ./my_own_stopwords.txt.
+In this example, the file path to your training data is /Volumes/secretUSB/train_data.csv, the filepath to the new trained model is ./models/my_own_baseline_model/my_own_ICD_model.sav, and the file path to the new trained vectorizer is ./models/my_own_baseline_model/my_own_vectorizer.sav. The classifier is Decision Trees (DT), the random state to 123, and the filepath to your txt file with stopwords is ./my_own_stopwords.txt.
 
 An example of how it could look like if you want to use the data for both training and testing, for example if you want to compare multiple classifiers using 30-fold cross-validation:
 
-`python3 baseline_coder.py -train_and_test /Volumes/secretUSB/train_and_test_data.csv -new_trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -classifier KNN -random_state 321 -test_size 0.3 -kfold 30 -stopwords ./my_own_stopwords.txt` 
+`python3 baseline_coder.py -train_and_test /Volumes/secretUSB/train_and_test_data.csv -new_trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -new_vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -classifier KNN -random_state 321 -test_size 0.3 -kfold 30 -stopwords ./my_own_stopwords.txt` 
 
 Here, since -kfold is more than 1, k-fold cross-validation will be used, and the held out test-set (of size test_size) will be left untouched. If -kfold 0 or -kfold 1 is used, k-fold cross-validation will not be used and all training data (of size 1-test_size) will be used for training and the held-out test set (of size test_size) will be used for testing. In this latter scenario, the trained model and vectorizer are saved. 
 
 An example of how it could look like if you want to use the data for testing only. This is done if you already have a trained model and want to see how it performs on unseen discharge summaries:
 
-`python3 baseline_coder.py -test -trained_model ./models/my_own_new_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_new_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
+`python3 baseline_coder.py -test -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
 
 When using the -test argument, a question will follow asking if you want to test a single discharge summary that you enter directly, or if you want to test discharge summaries in a csv file. If the latter is the case, the csv file should adhere to the format specified in the section *How to get hold of/prepare datasets*.
