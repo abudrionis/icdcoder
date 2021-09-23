@@ -41,7 +41,7 @@ Below, you can see how the data should be structured
 | ...           | ...                          | ...         | ...         | ...          | ...         |
 | *78676876*    | Chrons dis patient sent hom...| 1           | 0           | ...          | 0           |
 
-Moreover, if you have your own dataset with other labels than the Swedish EPR Gastro ICD-10 Pseudo Corpus, you need to replace the already existing *labels.txt* with your own version of the file by listing the ICD codes in the order they appear in the dataset. For example, if your ICD codes consist of the ICD blocks in Chapter XI, the txt file should look like this
+Moreover, if you have your own dataset with other labels than the blocks version of the Swedish EPR Gastro ICD-10 Pseudo Corpus, you need to replace the already existing *labels.txt* with your own version of the file by listing the ICD codes in the order they appear in the dataset. This is how the txt files looks like when you have ICD codes consisting of the ICD blocks in Chapter XI
 
 `K00-K14,K20-K31,K35-K38,K40-K46,K50-K52,K55-K64,K65-K67,K70-K77,K80-K87,K90-K93`
 
@@ -118,7 +118,7 @@ Try running:
 
 ## Train/test BERT model
 
-Now, you can **(i)** train the pre-trained BERT model, **(ii)**, train the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already trained model to predict the ICD codes of nseen discharge summaries. This is done by entering 
+Now, you can **(i)** fine-tune the pre-trained BERT model, **(ii)**, fine-tune the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already fine-tuned model to predict the ICD codes of nseen discharge summaries. This is done by entering 
 
 `python3 BERT_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
 
