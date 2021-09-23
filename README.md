@@ -58,11 +58,11 @@ For example, creating a folder on the desktop named my-ICD-project and entering
 
 `cd Desktop/my-ICD-project`
 
-Then, you clone the project by entering. Cloning is better than downloading as a zip file since that allows you to easily get (pull) the newest updates of the project.
+Then, you clone the project by entering
 
 `git clone https://github.com/sonjaremmer/icdcoder.git`
 
-*Note: regarding to a new GitHub policy, when asked to enter your GitHub password, you should instead enter a personal access token which can be created by following these instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token*
+Cloning is better than downloading as a zip file since that allows you to easily get (pull) the newest updates of the project.
 
 
 **(2)** If you want to use BERT to do the ICD classification, download the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
