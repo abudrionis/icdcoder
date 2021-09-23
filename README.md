@@ -165,7 +165,7 @@ For example
 **(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section How to prepare dataset used for fine-tuning.
 
 
-Evaluate an entire by entering
+Evaluate an entire file by entering
 
 
 `python3 BERT_coder.py -test_file [filepath to data]`
