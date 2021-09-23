@@ -117,11 +117,9 @@ def test_baseline(trained_model, vectorizer, stopwords):
                 if predictions.getformat() == 'lil':
                     predictions = loaded_model.predict(X_test).toarray()
 
-            except:
+            finally: 
+                present_predictions(predictions)
                 break
-        
-            present_predictions(predictions)
-            break
         
         elif input_choice == '2':
 
