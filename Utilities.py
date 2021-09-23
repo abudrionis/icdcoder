@@ -13,7 +13,7 @@ from transformers import AdamW
 import numpy as np
 from tqdm import tqdm
 from sklearn.metrics import f1_score, classification_report, precision_score, recall_score
-from sklearn.model_selection import KFold, StratifiedShuffleSplit
+from sklearn.model_selection import KFold, ShuffleSplit
 from copy import deepcopy
 import matplotlib.pyplot as plt
 import pickle as pkl
@@ -250,8 +250,8 @@ class KFoldCrossVal:
             new_trainer = deepcopy(self.trainer)
             x, y = [X[i] for i in train_indices], [Y[i] for i in train_indices]
             x_test, y_test = [X[i] for i in test_indices], [Y[i] for i in test_indices]
-            shuffled_split = StratifiedShuffleSplit(n_splits=1, test_size=0.1, random_state = self.random_state)
-            for final_train_indices, val_indices in shuffled_split.split(X=x, y=y):
+            shuffled_split = ShuffleSplit(n_splits=1, test_size=0.1, random_state = self.random_state)
+            for final_train_indices, val_indices in shuffled_split.split(X=x):
                 x, y = [X[i] for i in final_train_indices], [Y[i] for i in final_train_indices]
                 x_val, y_val = [X[i] for i in val_indices], [Y[i] for i in val_indices]
             new_trainer.train(X = x, Y = y, X_val = x_val, Y_val = y_val,
