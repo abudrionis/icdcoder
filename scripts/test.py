@@ -128,12 +128,10 @@ def test_baseline_text(test_text, trained_model, vectorizer, stopwords):
 
     #finally: 
 
-    if type(predictions).__module__ == 'numpy':
-
-        present_predictions(predictions)
-    
-    else:
+    if type(predictions).__module__ != 'numpy':
 
         predictions = loaded_model.predict(X_test).toarray()
-        present_predictions(predictions)
+
+    present_predictions(predictions)
+    
 
