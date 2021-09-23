@@ -440,7 +440,7 @@ Here, since -kfold is more than 1, k-fold cross-validation will be used, and the
 
 An example of how it could look like if you want to use the data for testing only. This is done if you already have a trained model and want to see how it performs on unseen discharge summaries:
 
-`python3 baseline_coder.py -test_file /Volumes/secretUSB/train_and_test_data.csv -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
+`python3 baseline_coder.py -test_file /Volumes/secretUSB/test_data.csv -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
 
 An example of how it could look like if you want to test a single discharge summary:
 
