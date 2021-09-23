@@ -254,9 +254,13 @@ Here, since -kfold is more than 1, k-fold cross-validation will be used, and the
 
 An example of how it could look like if you want to use the data for testing only. This is done if you already have a fine-tuned model and want to see how it performs on unseen discharge summaries:
 
-`python3 BERT_coder.py -test -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.6 -batch_size_test 1`
+`python3 BERT_coder.py -test_file /Volumes/secretUSB/train_and_test_data.csv -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.6 -batch_size_test 1`
 
-When using the -test argument, a question will follow asking if you want to test a single discharge summary that you enter directly, or if you want to test discharge summaries in a csv file. If the latter is the case, the csv file should adhere to the format specified in the section *How to get hold of/prepare datasets*. 
+An example of how it could look like if you want to test a single discharge summary:
+
+`python3 BERT_coder.py -test_text patient med crohns sjukdom utstriven -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.4 -batch_size_test 1`
+
+Here, the argument -test_text is used to predict the ICD codes of the the discharge summary 'patient med crohns sjukdom utstriven'. Own paths to the pre-trained and fine-tuned models, are given, the threshold is set to 0.4 and the test batch size is set to 1.
 
 ## Train/evaluate traditional supervised machine learning models
 
@@ -307,8 +311,11 @@ For example
 
 #### Testing only
 
-**(iii)** `-test`    	Use argument if you want to predict the ICD
-                	    codes of an unseen discharge summary
+**(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section How to prepare dataset used for fine-tuning.
+
+
+          `-test_text`    	Discharge summary to predict ICD codes for.'
+                        
 
 Predict the ICD codes of a single discharge summary already trained model by entering
 

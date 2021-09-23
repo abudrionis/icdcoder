@@ -7,7 +7,7 @@ Author: Sonja Remmer
 
 from scripts.train import train_baseline
 from scripts.train_test import train_test_baseline
-from scripts.test import test_baseline
+from scripts.test import test_baseline_filepath, test_baseline_text
 
 import argparse
 import os
@@ -15,7 +15,8 @@ import os
 
 def main(train_and_test_data,
     train_data, 
-    test, 
+    test_data,
+    test_text, 
     trained_model,
     vectorizer,
     new_vectorizer,
@@ -46,9 +47,16 @@ def main(train_and_test_data,
             random_state=random_state, 
             classifier=classifier)
 
-    # If argument test is given, the evaluate function is run
-    elif test:
-        test_baseline(
+    # If argument test_data is given, the evaluate function is run with the test filepath as input
+    elif test_data:
+        test_baseline_filepath(test_data=test_data,
+            trained_model=trained_model, 
+            vectorizer=vectorizer, 
+            stopwords=stopwords)
+
+    # If argument test_text is given, the evaluate function is run with the test text as input
+    elif test_text:
+        test_baseline_text(test=test_text,
             trained_model=trained_model, 
             vectorizer=vectorizer, 
             stopwords=stopwords)
@@ -74,12 +82,14 @@ if __name__ == '__main__':
 
     # Arguments -train, -train_and_test and -test are mutually exclusive and at least one is required
     mutually_exclusive.add_argument('-train', dest='only_train_data', type=str, default=None,
-                        help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to prepare dataset used for fine-tuning.')
+                        help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
     mutually_exclusive.add_argument('-train_and_test', dest='train_and_test_data', type=str, default=None,
-                        help='Filepath to csv file used for training and testing. The file needs to follow the structure specified in the README section How to prepare dataset used for fine-tuning.')
-    mutually_exclusive.add_argument('-test', dest='only_test_data', action='store_true', default=None,
-                        help='Use argument if you want to predict the ICD codes of an unseen discharge summary')
-    
+                        help='Filepath to csv file used for training and testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
+    mutually_exclusive.add_argument('-test_file', dest='test_data', type=str, default=None,
+                        help='Filepath to csv file used for testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
+    mutually_exclusive.add_argument('-test_text', dest='test_text', type=str, default=None,
+                        help='Discharge summary to predict ICD codes for.')
+
     # The rest of the arguments are optional and while not all functions are compatible with all main arguments, passing a non-compatible argument will just be ignored 
     parser.add_argument('-stopwords', dest='stopwords', type=str, default=default_stopwords,
                         help='Filepath to txt file with stopwords. Default is ./stopwords.txt', required=False)
@@ -104,7 +114,8 @@ if __name__ == '__main__':
 
     main(train_and_test_data=args.train_and_test_data,
         train_data=args.only_train_data,
-        test=args.only_test_data,
+        test_data=args.test_data,
+        test_text=args.test_text,
         stopwords=args.stopwords,
         trained_model=args.trained_model,
         vectorizer=args.vectorizer,

@@ -9,13 +9,14 @@ import argparse
 import os
 
 from scripts.train import train_bert
-from scripts.test import test_bert
+from scripts.test import test_bert_filepath, test_bert_text
 from scripts.train_test import train_test_bert
 
 
 def main(train_and_test_data,
         train_data, 
-        test, 
+        test_data,
+        test_text, 
         pre_trained_model,
         fine_tuned_model,
         new_fine_tuned_model,
@@ -59,12 +60,20 @@ def main(train_and_test_data,
             warm_up=warm_up,
             threshold=threshold)
     
-    # If argument test is given, the evaluate function is run
-    elif test:
-        test_bert(pre_trained_model, 
-            fine_tuned_model,
-            batch_size_test,
-            threshold)
+    # If argument test_data is given, the evaluate function is run with the test filepath as input
+    elif test_data:
+        test_bert_filepath(test_data=test_data,
+            pre_trained_model=pre_trained_model, 
+            fine_tuned_model=fine_tuned_model,
+            batch_size_test=batch_size_test,
+            threshold=threshold)
+    
+    elif test_text:
+        test_bert_text(test_data=test_text,
+            pre_trained_model=pre_trained_model, 
+            fine_tuned_model=fine_tuned_model,
+            batch_size_test=batch_size_test,
+            threshold=threshold)
 
 
 if __name__ == '__main__':
@@ -95,8 +104,10 @@ if __name__ == '__main__':
                         help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
     mutually_exclusive.add_argument('-train_and_test', dest='train_and_test_data', type=str, default=None,
                         help='Filepath to csv file used for training and testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
-    mutually_exclusive.add_argument('-test', dest='only_test_data', action='store_true', default=None,
-                        help='Use argument if you want to predict the ICD codes of an unseen discharge summary')
+    mutually_exclusive.add_argument('-test_data', dest='test_data', type=str, default=None,
+                        help='Filepath to csv file used for testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
+    mutually_exclusive.add_argument('-test_text', dest='test_text', type=str, default=None,
+                        help='Discharge summary to predict ICD codes for.')
     
     # The rest of the arguments are optional and while not all functions are compatible with all main arguments, passing a non-compatible argument will just be ignored 
     parser.add_argument('-pre_trained', dest='pre_trained_model', type=str, default=default_pre_trained_model,
@@ -134,7 +145,8 @@ if __name__ == '__main__':
 
     main(train_and_test_data=args.train_and_test_data,
         train_data=args.only_train_data,
-        test=args.only_test_data,
+        test_data=args.test_data,
+        test_text=args.test_text,
         pre_trained_model=args.pre_trained_model,
         fine_tuned_model=args.fine_tuned_model,
         new_fine_tuned_model=args.new_fine_tuned_model,

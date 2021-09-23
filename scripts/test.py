@@ -5,6 +5,7 @@ Author: Sonja Remmer
 
 '''
 
+from icdcoder.scripts.preprocess import preprocess_csv_baseline
 from matplotlib.pyplot import contour
 from scripts.preprocess import preprocess_csv_bert, preprocess_text_baseline
 from transformers import AutoTokenizer
@@ -36,8 +37,7 @@ def present_predictions(predictions):
     else:
         print('The discharge summary belongs to the group(s)', ', '.join(str(group) for group in prediction_list))
 
-
-def test_bert(pre_trained_model, fine_tuned_model, batch_size_test, threshold):
+def initialize_bert_trainer(pre_trained_model, fine_tuned_model):
 
     # Defining the model
     bert_model = torch.load(fine_tuned_model)
@@ -53,90 +53,80 @@ def test_bert(pre_trained_model, fine_tuned_model, batch_size_test, threshold):
     # Initializing the trainer
     trainer = Trainer(model=bert_model, tokenizer=bert_tokenizer)
 
-    while True:
+    return trainer
 
-        input_choice = input('\nDo you want to:\n(1) predict the ICD codes of a single discharge summary or\n(2) evaluate the model by entering the filepath to a csv file with test data?\n\nEnter 1 or 2: ')
 
-        if input_choice == '1':
+def test_bert_filepath(test_data, pre_trained_model, fine_tuned_model, batch_size_test, threshold):
 
-            # Saving the terminal input as input_text
-            input_text = input('Enter the discharge summary: ')
-
-            data = pd.read_csv('labels.txt', delimiter=',')
-            labels = data.columns.to_list()
-
-            # Predicting the ICD code(s) of the input text. Outputs a list where the first item of the list is a list of the length of number of ICD codes where each element is 0/1 representing if the label is present (1) or not (0)
-            predictions = trainer.evaluate(X = [input_text], batch_size = batch_size_test, thres = threshold, num_labels = len(labels))
-
-            present_predictions(predictions)
-            break
+    trainer = initialize_bert_trainer(pre_trained_model=pre_trained_model, fine_tuned_model=fine_tuned_model)
         
-        elif input_choice == '2':
+    # Reading data
+    X_test, Y_test = preprocess_csv_bert(filepath = test_data)
 
-            test_data = input('Enter the filepath to the test data: ')
+    print('\nTesting on all of the dataset\n')
 
-            # Reading data
-            X_test, Y_test = preprocess_csv_bert(filepath = test_data)
-
-            print('\nTesting on all of the dataset\n')
-
-            # The held-out test set is used for evaluation
-            predictions = trainer.evaluate(X = X_test, batch_size = batch_size_test, thres = threshold, num_labels = len(Y_test[0]))
-            print('\n_____________________________________________________________________________\n')
-            print('\nResults for testing on specified dataset\n')
-            print(classification_report(Y_test, predictions, zero_division=False))
-            break
-    
-        print('\nYou have to choose alternative 1 or 2\n')
-        
+    # The held-out test set is used for evaluation
+    predictions = trainer.evaluate(X = X_test, batch_size = batch_size_test, thres = threshold, num_labels = len(Y_test[0]))
+    print('\n_____________________________________________________________________________\n')
+    print('\nResults for testing on specified dataset\n')
+    print(classification_report(Y_test, predictions, zero_division=False))
 
 
-def test_baseline(trained_model, vectorizer, stopwords):
+def test_bert_text(test_text, pre_trained_model, fine_tuned_model, batch_size_test, threshold):
+
+    trainer = initialize_bert_trainer(pre_trained_model=pre_trained_model, fine_tuned_model=fine_tuned_model)
+
+    data = pd.read_csv('labels.txt', delimiter=',')
+    labels = data.columns.to_list()
+
+    # Predicting the ICD code(s) of the input text. Outputs a list where the first item of the list is a list of the length of number of ICD codes where each element is 0/1 representing if the label is present (1) or not (0)
+    predictions = trainer.evaluate(X = [test_text], batch_size = batch_size_test, thres = threshold, num_labels = len(labels))
+
+    present_predictions(predictions)
+
+
+def load_baseline_model(trained_model, trained_vectorizer):
 
     loaded_model = pickle.load(open(trained_model, 'rb'))
-    vectorizer = pickle.load(open(vectorizer, 'rb'))
+    loaded_vectorizer = pickle.load(open(trained_vectorizer, 'rb'))
 
-    while True:
+    return loaded_model, loaded_vectorizer
 
-        input_choice = input('\nDo you want to:\n(1) predict the ICD codes of a single discharge summary or\n(2) evaluate the model by entering the filepath to a csv file with test data?\n\nEnter 1 or 2: ')
 
-        if input_choice == '1':
+def test_baseline_filepath(test_data, trained_model, vectorizer, stopwords):
 
-            # Saving the terminal input as input_text
-            input_text = input('Enter the discharge summary: ')
+    loaded_model, loaded_vectorizer = load_baseline_model(trained_model = trained_model, trained_vectorizer = vectorizer)
 
-            text = preprocess_text_baseline(input_text, stopwords)
+    # Reading data
+    X_test, Y_test = preprocess_csv_baseline(filepath = test_data, filepath_stopwords = stopwords)
 
-            X_test = [text]
-            X_test = vectorizer.transform(X_test)
+    print('\nTesting on all of the dataset\n')
 
-            predictions = loaded_model.predict(X_test)
+    X_test = loaded_vectorizer.transform(X_test)
 
-            # Dealing with the fact that MLKNN() outputs a different format
-            try:
-                if predictions.getformat() == 'lil':
-                    predictions = loaded_model.predict(X_test).toarray()
-
-            finally: 
-                present_predictions(predictions)
-                break
-        
-        elif input_choice == '2':
-
-            test_data = input('Enter the filepath to the test data: ')
-
-            # Reading data
-            X_test, Y_test = preprocess_csv_bert(filepath = test_data)
-
-            print('\nTesting on all of the dataset\n')
-
-            # The held-out test set is used for evaluation
-            predictions = loaded_model.predict(X_test)
-            print('\n_____________________________________________________________________________\n')
-            print('\nResults for testing on specified dataset\n')
-            print(classification_report(Y_test, predictions, zero_division=False))
-            break
+    # The held-out test set is used for evaluation
+    predictions = loaded_model.predict(X_test)
     
-        print('\nYou have to choose alternative 1 or 2\n')
-    
+    print('\n_____________________________________________________________________________\n')
+    print('\nResults for testing on specified dataset\n')
+    print(classification_report(Y_test, predictions, zero_division=False))
 
+
+def test_baseline_text(test_text, trained_model, vectorizer, stopwords):
+
+    loaded_model, loaded_vectorizer = load_baseline_model(trained_model = trained_model, trained_vectorizer = vectorizer)
+
+    text = preprocess_text_baseline(text=test_text, filepath_stopwords=stopwords)
+
+    X_test = [text]
+    X_test = loaded_vectorizer.transform(X_test)
+
+    predictions = loaded_model.predict(X_test)
+
+    # Dealing with the fact that MLKNN() outputs a different format
+    try:
+        if predictions.getformat() == 'lil':
+            predictions = loaded_model.predict(X_test).toarray()
+
+    finally: 
+        present_predictions(predictions)
