@@ -149,7 +149,7 @@ For example
 **(ii)** `-train_and_test`
 			Filepath to csv file used for training and
                         testing. The file needs to follow the structure
-                        specified in the section *How to prepare dataset used for .
+                        specified in the section *How to get hold of/prepare datasets*.
 
 Train and evaluate by entering
 
@@ -344,7 +344,7 @@ For example
 
 #### Testing only
 
-**(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section How to prepare dataset used for fine-tuning.
+**(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section *How to get hold of/prepare datasets*.
 
 
 Evaluate an entire by entering
