@@ -58,7 +58,7 @@ For example, creating a folder on the desktop named my-ICD-project and entering
 
 `cd Desktop/my-ICD-project`
 
-Then, you clone the project by entering
+Then, you clone the project by entering. Cloning is better than downloading as a zip file since that allows you to easily get (pull) the newest updates of the project.
 
 `git clone https://github.com/sonjaremmer/icdcoder.git`
 
