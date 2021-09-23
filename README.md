@@ -346,7 +346,7 @@ Train and evaluate by entering
 
 For example
 
-`python3 baseline_coder.py -train /Volumes/secretUSB/train_and_test_data.csv`
+`python3 baseline_coder.py -train_and_test /Volumes/secretUSB/train_and_test_data.csv`
 
 #### Testing only
 
