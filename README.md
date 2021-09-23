@@ -262,6 +262,25 @@ An example of how it could look like if you want to test a single discharge summ
 
 Here, the argument -test_text is used to predict the ICD codes of the the discharge summary 'patient med crohns sjukdom utstriven'. Own paths to the pre-trained and fine-tuned models, are given, the threshold is set to 0.4 and the test batch size is set to 1.
 
+### Problems when using a GPU
+
+Note! If you're using a GPU and get the following error:
+
+
+*NVIDIA GeForce RTX 3070 Laptop GPU with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3070 Laptop GPU GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+...
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.*
+
+
+Try running:
+
+`pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html`
+
+
 ## Train/evaluate traditional supervised machine learning models
 
 You are also ready to train and evaluate traditional supervised machine learning models. As with the BERT model, you can also use traditional supervised machine learning models to **(i)** train, **(ii)**, train and evaluate the trained model, or **(iii)** use an already trained model to predict the ICD codes of an unseen discharge summary. This is done by entering 
@@ -391,3 +410,6 @@ An example of how it could look like if you want to use the data for testing onl
 `python3 baseline_coder.py -test -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
 
 When using the -test argument, a question will follow asking if you want to test a single discharge summary that you enter directly, or if you want to test discharge summaries in a csv file. If the latter is the case, the csv file should adhere to the format specified in the section *How to get hold of/prepare datasets*.
+
+
+
