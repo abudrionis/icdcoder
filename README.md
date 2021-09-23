@@ -5,13 +5,7 @@
 
 Code written by Anastasios Lamproudis and Sonja Remmer
 
-Questions?
-
-
-sonja.remmer@gmail.com
-
-
-hercules@dsv.su.se
+Questions? sonja.remmer@gmail.com or hercules@dsv.su.se
 
 ## What and why
 
