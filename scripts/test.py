@@ -5,6 +5,7 @@ Author: Sonja Remmer
 
 '''
 
+from matplotlib.pyplot import contour
 from scripts.preprocess import preprocess_csv_bert, preprocess_text_baseline
 from transformers import AutoTokenizer
 from Utilities import Trainer
@@ -112,8 +113,12 @@ def test_baseline(trained_model, vectorizer, stopwords):
             predictions = loaded_model.predict(X_test)
 
             # Dealing with the fact that MLKNN() outputs a different format
-            if predictions.getformat() == 'lil':
-                predictions = loaded_model.predict(X_test).toarray()
+            try:
+                if predictions.getformat() == 'lil':
+                    predictions = loaded_model.predict(X_test).toarray()
+
+            except:
+                continue
         
             present_predictions(predictions)
             break
