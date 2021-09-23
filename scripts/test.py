@@ -108,6 +108,8 @@ def test_baseline(trained_model, vectorizer, stopwords):
             X_test = vectorizer.transform(X_test).toarray()
             predictions = loaded_model.predict(X_test)
 
+            print(predictions)
+
             present_predictions(predictions)
             break
         
