@@ -145,15 +145,30 @@ For example
 
 #### Testing only
 
-**(iii)** `-test`    	Use argument if you want to predict the ICD
-                	codes of an unseen discharge summary
-
-Predict the ICD codes of a single discharge summary already trained (fine-tuned) model by entering
+**(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section How to prepare dataset used for fine-tuning.
 
 
-`python3 BERT_coder.py -test`
+Evaluate an entire by entering
 
-Nothing more than the argument itself is specified. After entering the line above, you will be asked to enter the discharge summary you want to predict the ICD codes for.
+
+`python3 BERT_coder.py -test_file [filepath to data]`
+
+For example
+
+`python3 BERT_coder.py -test_file /Volumes/secretUSB/test_data.csv`
+
+
+          `-test_text`    	Discharge summary to predict ICD codes for.'
+                        
+
+Predict the ICD codes of a single discharge summary already trained model by entering
+
+
+`python3 BERT_coder.py -test_text [discharge summary]`
+
+For example:
+
+`python3 BERT_coder.py -test_text [patient med crohns sjukdom utskriven]`
 
 
 ### Customize run using the optional arguments
@@ -333,15 +348,28 @@ For example
 **(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section How to prepare dataset used for fine-tuning.
 
 
+Evaluate an entire by entering
+
+
+`python3 baseline_coder.py -test_file [filepath to data]`
+
+For example
+
+`python3 baseline_coder.py -test_file /Volumes/secretUSB/test_data.csv`
+
+
           `-test_text`    	Discharge summary to predict ICD codes for.'
                         
 
 Predict the ICD codes of a single discharge summary already trained model by entering
 
 
-`python3 baseline_coder.py -test`
+`python3 baseline_coder.py -test_text [discharge summary]`
 
-Nothing more than the argument itself is specified. After entering the line above, you will be asked to enter the discharge summary you want to predict the ICD codes for.
+For example:
+
+`python3 baseline_coder.py -test_text [patient med crohns sjukdom utskriven]`
+
 
 
 ### Customize run using the optional arguments
