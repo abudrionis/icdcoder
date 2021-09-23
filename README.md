@@ -105,7 +105,7 @@ Now, you can **(i)** train the pre-trained BERT model, **(ii)**, train the BERT 
 
 `python3 BERT_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
 
-*Note that for the commands to work, your working directory has to be the icdcoder folder. Also, if you're using a virtual environment, it should be activated. If it was a while ago you cloned the repository, make sure you have the latest version by entering* `git pull`
+*Note that for the commands to work, your working directory has to be the icdcoder folder. Print the working direktory by entering `pwd` and change it using `cd [filepath to icdcoder folder]`, for example `cd Desktop/my-ICD-project/icdcoder` Also, if you're using a virtual environment, it should be activated by entering `source venv/bin/activate`. Make sure you have the latest version by entering* `git pull`
 
 ### Training and testing using the main arguments
 *Note that the arguments are mutually exclusive and one is required to run the BERT_coder.py script*
