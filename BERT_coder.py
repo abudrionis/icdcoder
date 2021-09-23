@@ -104,7 +104,7 @@ if __name__ == '__main__':
                         help='Filepath to csv file used for training. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
     mutually_exclusive.add_argument('-train_and_test', dest='train_and_test_data', type=str, default=None,
                         help='Filepath to csv file used for training and testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
-    mutually_exclusive.add_argument('-test_data', dest='test_data', type=str, default=None,
+    mutually_exclusive.add_argument('-test_file', dest='test_data', type=str, default=None,
                         help='Filepath to csv file used for testing. The file needs to follow the structure specified in the README section How to get hold of/prepare datasets.')
     mutually_exclusive.add_argument('-test_text', dest='test_text', type=str, default=None,
                         help='Discharge summary to predict ICD codes for.')
