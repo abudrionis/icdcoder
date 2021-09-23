@@ -131,7 +131,7 @@ def test_baseline(trained_model, vectorizer, stopwords):
             print('\nTesting on all of the dataset\n')
 
             # The held-out test set is used for evaluation
-            predictions = loaded_model.predict([X_test])
+            predictions = loaded_model.predict(X_test)
             print('\n_____________________________________________________________________________\n')
             print('\nResults for testing on specified dataset\n')
             print(classification_report(Y_test, predictions, zero_division=False))
