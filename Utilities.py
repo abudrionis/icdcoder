@@ -143,6 +143,7 @@ class Trainer:
         self.history['train f1 score'] = self.epoch_f1_history
         self.history['train recall'] = self.epoch_recall_history
         self.history['train precision'] = self.epoch_precision_history
+        os.makedirs(os.path.dirname(f'{save_path}/'), exist_ok = True)
         pkl.dump(self.history, open(f'{save_path}/history.pkl', 'wb'))
         if return_best_model:
             if X_val:
