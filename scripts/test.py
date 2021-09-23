@@ -109,9 +109,10 @@ def test_baseline(trained_model, vectorizer, stopwords):
             X_test = [text]
             X_test = vectorizer.transform(X_test)
 
+            #if type(predictions[0]) == '<class 'scipy.sparse.lil.lil_matrix'>':
             predictions = loaded_model.predict(X_test)#.toarray()
 
-            print(type(predictions[0]))
+            print(type(predictions))
 
             present_predictions(predictions)
             break
