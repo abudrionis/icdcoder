@@ -134,8 +134,9 @@ def train_test_baseline(train_and_test_data,
     vectorizer = TfidfVectorizer()
     vectorizer = vectorizer.fit(X_train)
 
-    # Saving the vectorizer
-    pickle.dump(vectorizer, open(new_vectorizer, 'wb'))
+    # If n_kfold is 1 or less (no k-fold), saving the vectorizer
+    if n_kfold <= 1:
+        pickle.dump(vectorizer, open(new_vectorizer, 'wb'))
 
     # Creating the tf-idf representation of the train and test sets
     X_train_vectors = vectorizer.transform(X_train)
