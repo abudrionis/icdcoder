@@ -211,7 +211,7 @@ For example:
 
 
   `-new_fine_tuned` 
-                        Filepath to folder to save new fine-tuned model in
+                        Filepath to folder to save new fine-tuned model in. *Default is ./models/new_fine_tuned_model*.
 
 
   `-epochs`      	The number of epochs to train for. *Default is 10*.

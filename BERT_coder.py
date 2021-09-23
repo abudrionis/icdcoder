@@ -115,7 +115,7 @@ if __name__ == '__main__':
     parser.add_argument('-fine_tuned', dest='fine_tuned_model', type=str, default=default_fine_tuned_model,
                         help='Filepath to fine-tuned (traind) model. Default is ./models/fine_tuned_model/pytorch_model.bin', required=False)
     parser.add_argument('-new_fine_tuned', dest='new_fine_tuned_model', type=str, default=default_new_fine_tuned_model,
-                        help='Filepath to folder to save new fine-tuned model in', required=False)
+                        help='Filepath to folder to save new fine-tuned model in. Default is ./models/new_fine_tuned_model', required=False)
 
 
     parser.add_argument('-test_size', dest='test_size', type=float, required=False, default=default_test_size,
