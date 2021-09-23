@@ -268,7 +268,7 @@ class KFoldCrossVal:
                                                num_labels = self.trainer.model.num_labels,
                                                batch_size = batch_size,
                                                thres = thres)
-            os.makedirs(os.path.dirname(f'{save_path}/Fold__{fold + 1}'), exist_ok = True)
+            os.makedirs(os.path.dirname(f'{save_path}/Fold__{fold + 1}/'), exist_ok = True)
             log_path = f'{save_path}/Fold__{fold + 1}/final_epoch_logs.txt'
             with open(log_path, 'w') as text_file:
                 text_file.write(classification_report(y_test, predictions, zero_division=False))
