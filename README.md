@@ -71,12 +71,12 @@ Then, you clone the project by entering
 Cloning is better than downloading as a zip file since that allows you to easily get (pull) the newest updates of the project.
 
 
-**(2)** If you want to use BERT to do the ICD classification, download the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
+**(2)** If you want to use the BERT model pre-trained on Swedish texts, KB-BERT (bert-base-swedish-cased), download it by clicking on this link: https://s3.amazonaws.com/models.huggingface.co/bert/KB/bert-base-swedish-cased/pytorch_model.bin Put the *pytorch_model.bin* file in the folder *icdcoder/models/pre_trained_model*. It is important that the model file is named *pytorch_model.bin*. 
 
 If you want another pre-trained model, you need to put the associated *config.json* and *vocab.txt* file in the *icdcoder/models/pre_trained_model* folder as well. This is not needed if you are working with *bert-base-swedish-cased* since those config and vocab files are already in the project folder. 
 
 
-**(3)** If you want to access a KB-BERT model fine-tuned on pseudonymized Swedish discharge summaries (the Stockholm EPR Gastro ICD-10 Pseudo Corpus version 2), contact Hercules Dalianis at hercules@dsv.su.se and put the pytorch_model.bin file in the folder *icdcoder/models/fine_tuned_model*. It is important that the model file is named *pytorch_model.bin*.
+**(3)** If you want to access a KB-BERT model fine-tuned on pseudonymized Swedish discharge summaries (the blocks version of the Stockholm EPR Gastro ICD-10 Pseudo Corpus version 2), contact Hercules Dalianis at hercules@dsv.su.se and put the pytorch_model.bin file in the folder *icdcoder/models/fine_tuned_model*. It is important that the model file is named *pytorch_model.bin*.
 
 
 **(4)** Change the working directory to the icdcoder repository by going to the terminal/command prompt and entering
@@ -301,7 +301,7 @@ An example of how it could look like if you want to test a single discharge summ
 Here, the argument -test_text is used to predict the ICD codes of the the discharge summary 'patient med crohns sjukdom utstriven'. Own paths to the pre-trained and fine-tuned models, are given, the threshold is set to 0.4 and the test batch size is set to 1.
 
 
-## Train/evaluate traditional supervised machine learning models
+## Train/test traditional supervised machine learning models
 
 You are also ready to train and evaluate traditional supervised machine learning models. As with the BERT model, you can also use traditional supervised machine learning models to **(i)** train, **(ii)**, train and evaluate the trained model, or **(iii)** use an already trained model to predict the ICD codes of unseen discharge summaries. This is done by entering 
 
