@@ -185,7 +185,7 @@ Predict the ICD codes of a single discharge summary already trained model by ent
 
 For example:
 
-`python3 BERT_coder.py -test_text [patient med crohns sjukdom utskriven]`
+`python3 BERT_coder.py -test_text patient med crohns sjukdom utskriven`
 
 
 ### Customize run using the optional arguments
@@ -367,7 +367,7 @@ Predict the ICD codes of a single discharge summary already trained model by ent
 
 For example:
 
-`python3 baseline_coder.py -test_text [patient med crohns sjukdom utskriven]`
+`python3 baseline_coder.py -test_text patient med crohns sjukdom utskriven`
 
 
 
