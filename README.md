@@ -3,6 +3,12 @@
 
 *If you are experiencing issues, the Python version may be the problem.*
 
+Code written by Anastasios Lamproudis and Sonja Remmer
+
+Questions?
+sonja.remmer@gmail.com
+hercules@dsv.su.se
+
 ## What and why
 
 The purpose of this project is to facilitate:
@@ -441,7 +447,3 @@ An example of how it could look like if you want to test a single discharge summ
 `python3 baseline_coder.py -test_text patient med crohns sjukdom utstriven -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
 
 Here, the argument -test_text is used to predict the ICD codes of the the discharge summary 'patient med crohns sjukdom utstriven'.
-
-
-Questions?
-Sonja Remmer: sonja.remmer@gmail.com
