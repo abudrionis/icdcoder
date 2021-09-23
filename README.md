@@ -357,7 +357,7 @@ For example
 `python3 baseline_coder.py -test_file /Volumes/secretUSB/test_data.csv`
 
 
-`-test_text`    	Discharge summary to predict ICD codes for.'
+`-test_text`    	Discharge summary to predict ICD codes for.
                         
 
 Predict the ICD codes of a single discharge summary already trained model by entering
