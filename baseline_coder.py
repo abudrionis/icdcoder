@@ -56,7 +56,7 @@ def main(train_and_test_data,
 
     # If argument test_text is given, the evaluate function is run with the test text as input
     elif test_text:
-        test_baseline_text(test=test_text,
+        test_baseline_text(test_text=test_text,
             trained_model=trained_model, 
             vectorizer=vectorizer, 
             stopwords=stopwords)

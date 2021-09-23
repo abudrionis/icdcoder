@@ -69,7 +69,7 @@ def main(train_and_test_data,
             threshold=threshold)
     
     elif test_text:
-        test_bert_text(test_data=test_text,
+        test_bert_text(test_text=test_text,
             pre_trained_model=pre_trained_model, 
             fine_tuned_model=fine_tuned_model,
             batch_size_test=batch_size_test,
