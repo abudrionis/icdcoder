@@ -77,10 +77,12 @@ def test_bert(pre_trained_model, fine_tuned_model, batch_size_test, threshold):
             # Reading data
             X_test, Y_test = preprocess_csv_bert(filepath = test_data)
 
+            print('\nTesting on all of the dataset\n')
+
             # The held-out test set is used for evaluation
             predictions = trainer.evaluate(X = X_test, batch_size = batch_size_test, thres = threshold, num_labels = len(Y_test[0]))
             print('\n_____________________________________________________________________________\n')
-            print('\nResults for BERT classifier trained on all training data and tested on held-out test set\n')
+            print('\nResults for testing on specified dataset\n')
             print(classification_report(Y_test, predictions, zero_division=False))
             break
     
@@ -120,10 +122,12 @@ def test_baseline(trained_model, vectorizer, stopwords):
             # Reading data
             X_test, Y_test = preprocess_csv_bert(filepath = test_data)
 
+            print('\nTesting on all of the dataset\n')
+
             # The held-out test set is used for evaluation
             predictions = loaded_model.predict(X_test)
             print('\n_____________________________________________________________________________\n')
-            print('\nResults for BERT classifier trained on all training data and tested on held-out test set\n')
+            print('\nResults for testing on specified dataset\n')
             print(classification_report(Y_test, predictions, zero_division=False))
             break
     
