@@ -56,6 +56,7 @@ def train_bert(train_data,
     trainer = Trainer(model = bert_model, tokenizer = bert_tokenizer)
 
     # Training and saving the model
+    print('\nTraining on all of the dataset\n')
     start_time = time.time()
     trainer.train(
         X = X_train,
