@@ -386,7 +386,7 @@ For example:
 #### For -train or -train_and_test
 
   `-classifier` 
-                        The desired classifier. Enter SVM, KNN or DT which represent Support Vector Machines, K-Nearest Neigbors, and Decision Trees. *Default is SVM*.
+                        The desired classifier. Enter SVM, KNN or DT which represent Support Vector Machines, K-Nearest Neigbors, and Decision Trees. *Default is SVM*. Default hyper-parameters are used.
 
    `-new_trained_model` 
                         Filepath to new trained model. Default is *./models/new_baseline_model/ICD_model.sav*.
