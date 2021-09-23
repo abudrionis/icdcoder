@@ -96,6 +96,23 @@ mess up other projects by installing the versions of the packages used in this p
 `pip install -r requirements.txt`
 
 
+Note! If you're using a GPU and get the following error:
+
+
+*NVIDIA GeForce RTX 3070 Laptop GPU with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3070 Laptop GPU GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+...
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.*
+
+
+Try running:
+
+`pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html`
+
+
 **(6)** You are ready to train and/or evaluate your models. Follow the instructions in the sections below to do so
 
 
@@ -276,24 +293,6 @@ An example of how it could look like if you want to test a single discharge summ
 `python3 BERT_coder.py -test_text patient med crohns sjukdom utstriven -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.4 -batch_size_test 1`
 
 Here, the argument -test_text is used to predict the ICD codes of the the discharge summary 'patient med crohns sjukdom utstriven'. Own paths to the pre-trained and fine-tuned models, are given, the threshold is set to 0.4 and the test batch size is set to 1.
-
-### Problems when using a GPU
-
-Note! If you're using a GPU and get the following error:
-
-
-*NVIDIA GeForce RTX 3070 Laptop GPU with CUDA capability sm_86 is not compatible with the current PyTorch installation.
-The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
-If you want to use the NVIDIA GeForce RTX 3070 Laptop GPU GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
-...
-RuntimeError: CUDA error: no kernel image is available for execution on the device
-CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
-For debugging consider passing CUDA_LAUNCH_BLOCKING=1.*
-
-
-Try running:
-
-`pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html`
 
 
 ## Train/evaluate traditional supervised machine learning models
