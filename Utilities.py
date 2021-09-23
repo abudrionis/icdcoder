@@ -129,6 +129,7 @@ class Trainer:
 
         if X_val:
             if save_model:
+                os.makedirs(os.path.dirname(f'{save_path}/'), exist_ok = True)
                 torch.save(model_best_loss, f = f'{save_path}/best_loss_model_epoch_{loss_epoch}.bin')
             self.history['validation loss'] = self.val_epoch_loss_history
             self.history['validation accuracy'] = self.val_epoch_acc_history
@@ -137,6 +138,7 @@ class Trainer:
             self.history['validation precision'] = self.val_epoch_precision_history
         else:
             if save_model:
+                os.makedirs(os.path.dirname(f'{save_path}/'), exist_ok = True)
                 torch.save(self.model.cpu(), f = f'{save_path}/model_epoch_{epochs}.bin')
         self.history['train loss'] = self.epoch_loss_history
         self.history['train accuracy'] = self.epoch_acc_history
