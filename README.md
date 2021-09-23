@@ -347,7 +347,7 @@ For example
 **(iii)** `-test_file`    	Filepath to csv file used for testing. The file needs to follow the structure specified in the section *How to get hold of/prepare datasets*.
 
 
-Evaluate an entire by entering
+Evaluate an entire file by entering
 
 
 `python3 baseline_coder.py -test_file [filepath to data]`
