@@ -443,4 +443,5 @@ An example of how it could look like if you want to test a single discharge summ
 Here, the argument -test_text is used to predict the ICD codes of the the discharge summary 'patient med crohns sjukdom utstriven'.
 
 
-
+Questions?
+Sonja Remmer: sonja.remmer@gmail.com
