@@ -190,7 +190,7 @@ For example:
 
 ### Customize run using the optional arguments
 
-*To get a description of all arguments in the terminal/command prompt, use the help argument by entering the following*
+*To get a description of all arguments of the BERT_coder.py in the terminal/command prompt, use the help argument by entering the following*
 
 `python3 BERT_coder.py -h`
 
@@ -373,7 +373,7 @@ For example:
 
 ### Customize run using the optional arguments
 
-*To get a description of all arguments in the terminal/command prompt, use the help argument by entering the following*
+*To get a description of all arguments of the baseline_coder.py in the terminal/command prompt, use the help argument by entering the following*
 
 `python3 baseline_coder.py -h`
 
