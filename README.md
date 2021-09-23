@@ -124,7 +124,7 @@ Try running:
 
 ## Train/test BERT model
 
-Now, you can **(i)** fine-tune the pre-trained BERT model, **(ii)**, fine-tune the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already fine-tuned model to predict the ICD codes of nseen discharge summaries. This is done by entering 
+Now, you can **(i)** fine-tune the pre-trained BERT model, **(ii)**, fine-tune the BERT pre-trained model and evaluate the newly trained model, or **(iii)** use an already fine-tuned model to predict the ICD codes of unseen discharge summaries. This is done by entering 
 
 `python3 BERT_coder.py` followed by one of the main arguments specified in the section *Training and testing using the main arguments* below.
 
