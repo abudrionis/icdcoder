@@ -107,8 +107,8 @@ def test_baseline(trained_model, vectorizer, stopwords):
             text = preprocess_text_baseline(input_text, stopwords)
 
             X_test = [text]
-            X_test = vectorizer.transform(X_test).toarray()
-            predictions = loaded_model.predict(X_test)
+            X_test = vectorizer.transform(X_test)
+            predictions = loaded_model.predict(X_test).toarray()
 
             print(predictions[0])
 
