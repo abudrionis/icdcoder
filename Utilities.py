@@ -13,7 +13,7 @@ from transformers import AdamW
 import numpy as np
 from tqdm import tqdm
 from sklearn.metrics import f1_score, classification_report, precision_score, recall_score
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedShuffleSplit
 from copy import deepcopy
 import matplotlib.pyplot as plt
 import pickle as pkl
@@ -39,7 +39,7 @@ class Trainer:
         self.history = {}
 
     def train(self, X, Y, epochs: int, batch_size: int, learning_rate: float, gradient_accumulation: int = 1, X_val = None,
-              Y_val = None, thres: float = .5, warm_up: int = 155, fold = 0, return_best_model = True, save_path = './'):
+              Y_val = None, thres: float = .5, warm_up: int = 155, return_best_model = True, save_path = './'):
         if torch.cuda.is_available():
             dev = 'cuda:0'
             self.model.to(dev)
@@ -108,10 +108,6 @@ class Trainer:
                         dummy_predictions = np.concatenate((dummy_predictions, output), axis = 0)
                         dummy_labels = np.concatenate((dummy_labels, y_val), axis = 0)
                     predictions, true_labels = dummy_predictions[1:], dummy_labels[1:]
-                    log_path = f'{save_path}/Fold__{fold + 1}/Epoch_{epoch + 1}_logs_fold.txt'
-                    os.makedirs(os.path.dirname(log_path), exist_ok = True)
-                    with open(log_path, 'w') as text_file:
-                        text_file.write(classification_report(true_labels, predictions, zero_division=False))
                     if np.average(batch_loss_history) < old_loss:
                         loss_epoch = epoch + 1
                         model_best_loss = deepcopy(self.model).cpu()
@@ -131,24 +127,25 @@ class Trainer:
                 print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
 
         if X_val:
-            torch.save(model_best_loss, f = f'{save_path}/Fold__{fold + 1}/best_loss_model_epoch_{loss_epoch}.bin')
+            torch.save(model_best_loss, f = f'{save_path}/best_loss_model_epoch_{loss_epoch}.bin')
             self.history['validation loss'] = self.val_epoch_loss_history
             self.history['validation accuracy'] = self.val_epoch_acc_history
             self.history['validation f1 score'] = self.val_epoch_f1_history
             self.history['validation recall'] = self.val_epoch_recall_history
             self.history['validation precision'] = self.val_epoch_precision_history
         else:
-            if not os.path.exists(f'{save_path}/Fold__{fold + 1}'):
-                os.makedirs(f'{save_path}/Fold__{fold + 1}')
-            torch.save(self.model.cpu(), f = f'{save_path}/Fold__{fold + 1}/model_epoch_{epochs}.bin')
+            torch.save(self.model.cpu(), f = f'{save_path}/model_epoch_{epochs}.bin')
         self.history['train loss'] = self.epoch_loss_history
         self.history['train accuracy'] = self.epoch_acc_history
         self.history['train f1 score'] = self.epoch_f1_history
         self.history['train recall'] = self.epoch_recall_history
         self.history['train precision'] = self.epoch_precision_history
-        pkl.dump(self.history, open(f'{save_path}/Fold__{fold + 1}/history.pkl', 'wb'))
+        pkl.dump(self.history, open(f'{save_path}/history.pkl', 'wb'))
         if return_best_model:
-            self.model = model_best_loss
+            if X_val:
+                self.model = model_best_loss
+            else:
+                pass
 
     def get_DataLoader(self, X, Y, batch_size):
         X = self.tokenize(X = X)
@@ -253,7 +250,11 @@ class KFoldCrossVal:
             new_trainer = deepcopy(self.trainer)
             x, y = [X[i] for i in train_indices], [Y[i] for i in train_indices]
             x_test, y_test = [X[i] for i in test_indices], [Y[i] for i in test_indices]
-            new_trainer.train(X = x, Y = y, X_val = x_test, Y_val = y_test,
+            shuffled_split = StratifiedShuffleSplit(n_splits=1, test_size=0.1, random_state = self.random_state)
+            for final_train_indices, val_indices in shuffled_split.split(X=x):
+                x, y = [X[i] for i in final_train_indices], [Y[i] for i in final_train_indices]
+                x_val, y_val = [X[i] for i in val_indices], [Y[i] for i in val_indices]
+            new_trainer.train(X = x, Y = y, X_val = x_val, Y_val = y_val,
                               epochs = epochs,
                               batch_size = batch_size,
                               learning_rate = learning_rate,
@@ -268,9 +269,11 @@ class KFoldCrossVal:
                                                num_labels = self.trainer.model.num_labels,
                                                batch_size = batch_size,
                                                thres = thres)
+            os.makedirs(os.path.dirname(f'{save_path}/Fold__{fold + 1}'), exist_ok = True)
             log_path = f'{save_path}/Fold__{fold + 1}/final_epoch_logs.txt'
             with open(log_path, 'w') as text_file:
                 text_file.write(classification_report(y_test, predictions, zero_division=False))
+            pkl.dump(self.history, open(f'{save_path}/Fold__{fold + 1}/history.pkl', 'wb'))
             dummy_predictions = np.concatenate((dummy_predictions, predictions), axis = 0)
             dummy_labels = np.concatenate((dummy_labels, np.array(y_test)), axis = 0)
 
