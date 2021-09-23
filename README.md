@@ -9,6 +9,8 @@ Questions? sonja.remmer@gmail.com or hercules@dsv.su.se
 
 ICD coder demo: https://icdcoder.dsv.su.se/ 
 
+Sonja Remmer's master's thesis [Automatic Diagnosis Code Assignment with KB-BERT – ICD Classification Using Swedish Discharge Summaries](https://dsv.su.se/polopoly_fs/1.564972.1625658696!/menu/standard/file/Remmer%202021%20Automatic%20Diagnosis%20Code%20Assignment%20with%20KB-BERT%20%E2%80%93%20ICD%20Classification%20Using%20Swedish%20Discharge%20Summaries%20-%20refined.pdf)
+
 ## What and why
 
 The purpose of this project is to facilitate:
