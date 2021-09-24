@@ -125,12 +125,12 @@ class Trainer:
                 print('%-30s %4.5f' % ('Train loss (BCE)', self.epoch_loss_history[-1]))
                 print('%-30s %4.2f' % ('Validation F1-micro score', self.val_epoch_f1_history[-1]))
                 print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
-            else:
-                print('\n%-30s %4.5f' % ('Train loss (BCE)', self.epoch_loss_history[-1]))
-                print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
                 if early_stopping:
                     if patience == epoch_patience_count:
                         break
+            else:
+                print('\n%-30s %4.5f' % ('Train loss (BCE)', self.epoch_loss_history[-1]))
+                print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
 
         if X_val:
             if save_model:
