@@ -1,5 +1,5 @@
 '''
-Script with collection of funcitons used for finetuning and evaluating 
+Script with collection of functions used for finetuning and evaluating
 
 Author: Anastasios Lamproudis
 
@@ -40,7 +40,7 @@ class Trainer:
 
     def train(self, X, Y, epochs: int, batch_size: int, learning_rate: float, gradient_accumulation: int = 1, X_val = None,
               Y_val = None, thres: float = .5, warm_up: int = 155, return_best_model: bool = True, save_path: str = './',
-              save_model: bool = True):
+              save_model: bool = True, early_stopping: bool = True, patience: int = 1):
         if torch.cuda.is_available():
             dev = 'cuda:0'
             self.model.to(dev)
@@ -54,6 +54,7 @@ class Trainer:
         scheduler = self.get_scheduler(steps = (len(dataLoader) // gradient_accumulation) * epochs, warm_up = warm_up)
         old_loss, old_f1, old_acc = np.inf, -np.inf, -np.inf
         model_best_loss, model_best_f1, model_best_acc = None, None, None
+        epoch_patience_count = 0
         for epoch in range(epochs):
             print(f'\nEpoch {epoch + 1}')
             self.model.train()
@@ -86,7 +87,7 @@ class Trainer:
             self.epoch_recall_history.append(np.average(batch_recall_history))
             self.epoch_precision_history.append(np.average(batch_precision_history))
 
-            # Evaluation of the validation set if it exists
+            # Evaluation of the validation set if it exists / early stopping applies only in this case
             if X_val:
                 self.model.eval()
                 with torch.no_grad():
@@ -108,11 +109,12 @@ class Trainer:
                         batch_precision_history.append(precision_score(y_true = y_val, y_pred = output, average = 'micro', zero_division=False))
                         dummy_predictions = np.concatenate((dummy_predictions, output), axis = 0)
                         dummy_labels = np.concatenate((dummy_labels, y_val), axis = 0)
-                    predictions, true_labels = dummy_predictions[1:], dummy_labels[1:]
+                    epoch_patience_count += 1
                     if np.average(batch_loss_history) < old_loss:
                         loss_epoch = epoch + 1
                         model_best_loss = deepcopy(self.model).cpu()
                         old_loss = np.average(batch_loss_history)
+                        epoch_patience_count -= 1
                     self.val_epoch_f1_history.append(np.average(batch_f1_history))
                     self.val_epoch_loss_history.append(np.average(batch_loss_history))
                     self.val_epoch_acc_history.append(np.average(batch_acc_history))
@@ -126,6 +128,9 @@ class Trainer:
             else:
                 print('\n%-30s %4.5f' % ('Train loss (BCE)', self.epoch_loss_history[-1]))
                 print('%-30s %4.2f' % ('Train F1-micro score', self.epoch_f1_history[-1]))
+                if early_stopping:
+                    if patience == epoch_patience_count:
+                        break
 
         if X_val:
             if save_model:
@@ -204,28 +209,6 @@ class Trainer:
                 dummy = np.concatenate((dummy, output), axis = 0)
         return dummy[1:]
 
-    def plot(self, fold):
-        epochs = len(self.epoch_loss_history)
-        fig, (ax1, ax2, ax3) = plt.subplots(3, sharex = True, figsize = (19.2, 10.8), dpi = 100)
-        ax1.plot(range(epochs), self.epoch_loss_history, label = 'Train')
-        if len(self.val_epoch_loss_history) > 0:
-            ax1.plot(range(epochs), self.val_epoch_loss_history, label = 'Validation')
-        ax1.set_title('Loss'), ax1.legend(), ax1.grid(), ax1.set(ylabel = 'Loss')
-        ax2.plot(range(epochs), self.epoch_acc_history, label = 'Train')
-        if len(self.val_epoch_acc_history) > 0:
-            ax2.plot(range(epochs), self.val_epoch_acc_history, label = 'Validation')
-        ax2.set_title('Accuracy'), ax2.legend(), ax2.grid(), ax2.set(ylabel = 'Accuracy')
-        ax3.plot(range(epochs), self.epoch_f1_history, label = 'Train')
-        if len(self.val_epoch_f1_history) > 0:
-            ax3.plot(range(epochs), self.val_epoch_f1_history, label = 'Validation')
-        ax3.set_title('F1-micro score'), ax3.legend(), ax3.grid(), ax3.set(ylabel = 'F1-micro score')
-
-        for ax in fig.get_axes():
-            ax.label_outer()
-
-        plt.xlabel('Epochs')
-        fig.savefig(fname = f'./fold_{fold+1}.png')
-
     @staticmethod
     def accuracy(y_true, y_pred):
         acc_list = []
@@ -290,26 +273,3 @@ class KFoldCrossVal:
             text_file.write(classification_report(true_labels, predictions, zero_division=False))
         print('\nCombined results for all folds of the data\n')
         print(classification_report(true_labels, predictions, zero_division=False))
-
-    def plot(self, loss, accuracy, f1):
-        epochs = loss.shape[1]
-        fig, (ax1, ax2, ax3) = plt.subplots(3, sharex = True, figsize = (19.2, 10.8), dpi = 100)
-        loss_std, loss_mean = np.std(loss, axis = 0), np.mean(loss, axis = 0)
-        ax1.plot(range(epochs), loss_mean)
-        ax1.fill_between(range(epochs), loss_mean - loss_std, loss_mean + loss_std, alpha = .2)
-        ax1.set_title('Validation loss (BCE)'), ax1.legend(), ax1.grid(), ax1.set(ylabel = 'Loss')
-        acc_std, acc_mean = np.std(accuracy, axis = 0), np.mean(accuracy, axis = 0)
-        ax2.plot(range(epochs), acc_mean)
-        ax2.fill_between(range(epochs), acc_mean - acc_std, acc_mean + acc_std, alpha = .2)
-        ax2.set_title('Validation accuracy'), ax2.legend(), ax2.grid(), ax2.set(ylabel = 'Accuracy')
-        f1_std, f1_mean = np.std(f1, axis = 0), np.mean(f1, axis = 0)
-        ax3.plot(range(epochs), f1_mean)
-        ax3.fill_between(range(epochs), f1_mean - f1_std, f1_mean + f1_std, alpha = .2)
-        ax3.set_title('Validation F1-micro score'), ax3.legend(), ax3.grid(), ax3.set(ylabel = 'F1-micro score')
-
-        for ax in fig.get_axes():
-            ax.label_outer()
-
-        plt.xlabel('Epochs')
-        fig.show()
-        fig.savefig(fname = f'./{self.nfolds}_fold_metrics.png')
