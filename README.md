@@ -220,7 +220,7 @@ For example:
                         Filepath to folder to save new fine-tuned model in. *Default is ./models/new_fine_tuned_model*.
 
 
-  `-epochs`      	The number of epochs to train for. *Default is 10*.
+  `-epochs`      	The number of epochs to train for. *Default is 10*. Note that early stopping is applied.
 
 
   `-batch_size_train`
