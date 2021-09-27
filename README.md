@@ -187,7 +187,7 @@ For example
 Predict the ICD codes of a single discharge summary already trained model by entering
 
 
-`python3 BERT_coder.py -test_text [discharge summary]`
+`python3 BERT_coder.py -test_text ["discharge summary"]`
 
 For example:
 
@@ -369,7 +369,7 @@ For example
 Predict the ICD codes of a single discharge summary already trained model by entering
 
 
-`python3 baseline_coder.py -test_text [discharge summary]`
+`python3 baseline_coder.py -test_text ["discharge summary"]`
 
 For example:
 
