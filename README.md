@@ -296,9 +296,9 @@ An example of how it could look like if you want to use the data for testing onl
 
 An example of how it could look like if you want to test a single discharge summary:
 
-`python3 BERT_coder.py -test_text "patient med crohns sjukdom utstriven" -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.4 -batch_size_test 1`
+`python3 BERT_coder.py -test_text "patient med crohns sjukdom utskriven" -pre_trained ./models/my_own_pre_trained_model -fine_tuned ./models/my_own_fine_tuned_model/pytorch_model.bin -threshold 0.4 -batch_size_test 1`
 
-Here, the argument -test_text is used to predict the ICD codes of the the discharge summary "patient med crohns sjukdom utstriven". Own paths to the pre-trained and fine-tuned models, are given, the threshold is set to 0.4 and the test batch size is set to 1.
+Here, the argument -test_text is used to predict the ICD codes of the the discharge summary "patient med crohns sjukdom utskriven". Own paths to the pre-trained and fine-tuned models, are given, the threshold is set to 0.4 and the test batch size is set to 1.
 
 
 ## Train/test traditional supervised machine learning models
@@ -444,6 +444,6 @@ An example of how it could look like if you want to use the data for testing onl
 
 An example of how it could look like if you want to test a single discharge summary:
 
-`python3 baseline_coder.py -test_text "patient med crohns sjukdom utstriven" -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
+`python3 baseline_coder.py -test_text "patient med crohns sjukdom utskriven" -trained_model ./models/my_own_baseline_model/my_own_ICD_model.sav -vectorizer ./models/my_own_baseline_model/my_own_vectorizer.sav -stopwords ./my_own_stopwords.txt`
 
-Here, the argument -test_text is used to predict the ICD codes of the the discharge summary "patient med crohns sjukdom utstriven".
+Here, the argument -test_text is used to predict the ICD codes of the the discharge summary "patient med crohns sjukdom utskriven".
