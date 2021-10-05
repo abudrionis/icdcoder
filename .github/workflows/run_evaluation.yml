@@ -44,7 +44,7 @@ jobs:
         run: exec bash
         
       - name: activate conda env
-        run: conda activate icdcoder-github-action
+        run: $CONDA/bin/activate icdcoder-github-action
       
       - name: prepare venv
         run: |
