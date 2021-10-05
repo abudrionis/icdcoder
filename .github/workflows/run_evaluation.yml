@@ -30,7 +30,7 @@ jobs:
           eval "$(/Users/andrius/anaconda/bin/conda shell.bash hook)"
           conda init
         
-      - name: prepare venv
+      - name: prepare venv and run validation
         run: |
           conda init bash
           exec bash
@@ -39,5 +39,4 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
           cp ~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/fine_tuned_model/pytorch_model.bin ~/work/icdcoder/models/fine_tuned_model/
-      - name: run model evaluation
-        run: python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv" 
+          python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv"       
