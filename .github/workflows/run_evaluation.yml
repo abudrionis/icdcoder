@@ -33,6 +33,7 @@ jobs:
       - name: prepare venv
         run: |
           conda init bash
+          exec bash
           conda create -y --name icdcoder-github-action python=3.7.3
           conda activate icdcoder-github-action
           pip install --upgrade pip
