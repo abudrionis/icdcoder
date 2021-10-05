@@ -39,7 +39,7 @@ jobs:
       
       - name: activate conda env
         run: |
-          conda init
+          conda init bash
           conda activate icdcoder-github-action
       
       - name: prepare venv
