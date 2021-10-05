@@ -17,16 +17,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - name: install miniconda
-        run: |
-          wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh
-          bash Miniconda3-py37_4.10.3-Linux-x86_64.sh -b -p $HOME/miniconda
+      
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: icdcoder-gh-actions
+          python-version: "3.7.3"
 
       - name: prepare venv
         run: |
-          conda create -y --name icdcoder python=3.7.3 
-          conda activate icdcoder
           pip install --upgrade pip
           cd icdcoder
           pip install -r requirements.txt
