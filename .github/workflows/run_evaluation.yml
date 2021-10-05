@@ -42,6 +42,8 @@ jobs:
           python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv"
       - name: run model validation
         run: |
+          conda init bash
+          exec bash
           conda activate icdcoder-github-action
           python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv"
         
