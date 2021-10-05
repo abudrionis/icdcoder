@@ -38,7 +38,7 @@ jobs:
         run: |
           conda create -y --name icdcoder-github-action python=3.7.3
           conda info
-          $CONDA/bin/activate icdcoder-github-action
+          /home/andrius/miniconda3/bin/activate icdcoder-github-action
       
       #- name: conda init
       #  run: conda init bash
