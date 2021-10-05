@@ -23,7 +23,7 @@ jobs:
           python-version: "3.7.3"
       
       - name: Bash
-        shell: bash -l {0}
+        shell: bash
         
       - name: prepare venv
         run: |
