@@ -20,7 +20,8 @@ jobs:
       
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: icdcoder-gh-actions
+          auto-activate-base: true
+          activate-environment: "icdcoder-gh-actions"
           python-version: "3.7.3"
 
       - name: prepare venv
