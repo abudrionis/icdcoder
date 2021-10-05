@@ -21,12 +21,16 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2.1.1
         with:
           python-version: "3.7.3"
-
+      
+      - name: Bash
+        shell: bash -l {0}
+        
       - name: prepare venv
         run: |
           pip install --upgrade pip
-          cd icdcoder
           pip install -r requirements.txt
           cp ~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/fine_tuned_model/pytorch_model.bin ~/work/icdcoder/models/fine_tuned_model/
       - name: run model evaluation
-        run: python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv" 
+        run: |
+          cd icdcoder
+          python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv" 
