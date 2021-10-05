@@ -9,19 +9,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: install miniconda
+      - name: Install miniconda
         run: |
           wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
           bash ~/miniconda.sh -b -f -p $HOME/miniconda
      
-      - name: create and configure new conda env 
+      - name: Create and configure new conda env 
         run: |
           conda create -y --name icdcoder-github-action python=3.7.3
-          conda info
-          /home/andrius/miniconda3/bin/activate icdcoder-github-action
+          ~/miniconda3/bin/activate icdcoder-github-action
           pip install --upgrade pip
           pip install -r requirements.txt
           cp ~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/fine_tuned_model/pytorch_model.bin ~/actions-runner/_work/icdcoder/icdcoder/models/fine_tuned_model/
 
-      - name: run model validation
+      - name: Run model validation
         run: python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv"
