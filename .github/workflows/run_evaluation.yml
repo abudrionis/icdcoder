@@ -35,16 +35,19 @@ jobs:
           conda init
      
       - name: create new conda env 
-        run: conda create -y --name icdcoder-github-action python=3.7.3
+        run: |
+          conda create -y --name icdcoder-github-action python=3.7.3
+          conda info
+          $CONDA/bin/activate icdcoder-github-action
       
-      - name: conda init
-        run: conda init bash
+      #- name: conda init
+      #  run: conda init bash
       
-      - name: restart bash
-        run: exec bash
+      #- name: restart bash
+      #  run: exec bash
         
-      - name: activate conda env
-        run: $CONDA/bin/activate icdcoder-github-action
+      #- name: activate conda env
+      #  run: $CONDA/bin/activate icdcoder-github-action
       
       - name: prepare venv
         run: |
