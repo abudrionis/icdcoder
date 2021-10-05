@@ -21,9 +21,6 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2.1.1
         with:
           python-version: "3.7.3"
-      
-      - name: Bash
-        shell: bash
         
       - name: prepare venv
         run: |
