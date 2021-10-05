@@ -1,59 +1,27 @@
-# This is a basic workflow to help you get started with Actions
+name: Run model validation
 
-name: CI
-
-# Controls when the workflow will run
 on:
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   run-evaluation:
-    # The type of runner that the job will run on
     runs-on: self-hosted
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      #- uses: conda-incubator/setup-miniconda@v2.1.1
-      #  with: 
-      #    auto-activate-base: false
-      #    python-version: '3.7.3'
       
       - name: install miniconda
         run: |
           wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
           bash ~/miniconda.sh -b -f -p $HOME/miniconda
      
-      - name: configure bash  
-        run: |
-          eval "$(/Users/andrius/anaconda/bin/conda shell.bash hook)"
-          conda init
-     
-      - name: create new conda env 
+      - name: create and configure new conda env 
         run: |
           conda create -y --name icdcoder-github-action python=3.7.3
           conda info
           /home/andrius/miniconda3/bin/activate icdcoder-github-action
-      
-      #- name: conda init
-      #  run: conda init bash
-      
-      #- name: restart bash
-      #  run: exec bash
-        
-      #- name: activate conda env
-      #  run: $CONDA/bin/activate icdcoder-github-action
-      
-      - name: prepare venv
-        run: |
           pip install --upgrade pip
           pip install -r requirements.txt
           cp ~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/fine_tuned_model/pytorch_model.bin ~/actions-runner/_work/icdcoder/icdcoder/models/fine_tuned_model/
 
       - name: run model validation
         run: python3 BERT_coder.py -test_file "~/data/Stockholm-EPR-Gastro-ICD-10-Pseudo-Corpus-v2/Blocks-pseudo/210414_above3_pseudo_210622.csv"
-        
